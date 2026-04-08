@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Kurofune Work",
+    "slug": "kurofune-work",
+    "scheme": "com.kurofune.work",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#12A497"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTabletMode": true,
+      "bundleIdentifier": "com.kurofune.work"
+    },
+    "android": {
+      "package": "com.kurofune.work"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": false
+        }
+      ]
+    ]
+  }
+}
