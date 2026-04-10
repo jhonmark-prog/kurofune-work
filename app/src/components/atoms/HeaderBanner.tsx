@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     color: Colors.textInverse,
     letterSpacing: 0.2,
     lineHeight: 26,
-    fontFamily: 'NunitoSans',
+    fontFamily: 'NunitoSans-Bold',
   },
   subtitle: {
     fontSize: 13,
