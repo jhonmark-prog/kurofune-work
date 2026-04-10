@@ -1,4 +1,3 @@
-import React from 'react';
 import { View } from 'react-native';
 import { FilterChip } from '../molecules/FilterChip';
 import { homeStyles as styles } from '../../styles/HomeScreen.styles';

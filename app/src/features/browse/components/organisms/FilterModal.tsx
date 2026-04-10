@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
 import {
-  Modal,
   View,
+  Text,
+  TextInput,
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Icon } from '../../../../components';
-import { Typography } from '../../../../components';
-import { Button } from '../../../../components';
-import { Input } from '../../../../components';
-import { Select } from '../../../../components';
-import { Colors } from '../../../../constants/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 import { filterStyles as styles } from '../../styles/FilterModal.styles';
 import { INDUSTRY_OPTIONS, VISA_TYPE_OPTIONS } from '../../constants/browseData';
 import type { JobFilters } from '../../types/browse.types';
 
-interface FilterModalProps {
-  visible: boolean;
+interface FilterScreenProps {
   filters: JobFilters;
   onChangeFilters: (filters: JobFilters) => void;
   onReset: () => void;
@@ -27,85 +23,93 @@ interface FilterModalProps {
 }
 
 export function FilterModal({
-  visible,
   filters,
   onChangeFilters,
   onReset,
   onApply,
   onClose,
-}: FilterModalProps) {
-  const [locationFocused, setLocationFocused] = useState(false);
-
-  function setVisa(visa: string) {
-    onChangeFilters({ ...filters, visaType: visa });
-  }
-
-  const industryOptions = INDUSTRY_OPTIONS.map(industry => ({
-    label: industry,
-    value: industry,
-  }));
-
-  const visaOptions = VISA_TYPE_OPTIONS.map(visa => ({
-    label: visa,
-    value: visa,
-  }));
+}: FilterScreenProps) {
+  const [locationFocused, setLocationFocused] = React.useState(false);
 
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+    <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backBtn} onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+          <Ionicons name="arrow-back" size={20} color={styles.backIcon.color} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Filter</Text>
+        <View style={styles.backBtn} />
+      </View>
+
       <KeyboardAvoidingView
-        style={styles.overlay}
+        style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={onClose} />
-        <View style={styles.sheet}>
-          <View style={styles.handle} />
+        <ScrollView
+          style={styles.body}
+          contentContainerStyle={styles.bodyContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Location */}
+          <Text style={styles.sectionLabel}>Location</Text>
+          <TextInput
+            style={[styles.input, locationFocused && styles.inputFocused]}
+            placeholder="Location"
+            placeholderTextColor={styles.placeholder.color}
+            value={filters.location}
+            onChangeText={(text) => onChangeFilters({ ...filters, location: text })}
+            onFocus={() => setLocationFocused(true)}
+            onBlur={() => setLocationFocused(false)}
+          />
 
-          <View style={styles.header}>
-            <Typography variant="heading2">Filters</Typography>
-            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Icon name="close" size={24} color={Colors.textSecondary} />
-            </TouchableOpacity>
-          </View>
-
-          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-            <Input
-              placeholder="Location"
-              value={filters.location}
-              onChangeText={(text) => onChangeFilters({ ...filters, location: text })}
-              onFocus={() => setLocationFocused(true)}
-              onBlur={() => setLocationFocused(false)}
-            />
-
-            <Select
-              label="Industry"
-              value={filters.industry}
+          {/* Industry */}
+          <Text style={styles.sectionLabel}>Industry</Text>
+          <View style={styles.pickerWrapper}>
+            <Picker
+              selectedValue={filters.industry}
               onValueChange={(value) => onChangeFilters({ ...filters, industry: value })}
-              options={industryOptions}
-            />
-
-            <Select
-              label="Visa Type"
-              value={filters.visaType}
-              onValueChange={setVisa}
-              options={visaOptions}
-            />
-          </ScrollView>
-
-          <View style={styles.footer}>
-            <Button
-              title="Reset"
-              variant="ghost"
-              onPress={onReset}
-              style={{ flex: 1, marginRight: 8 }}
-            />
-            <Button
-              title="Apply"
-              onPress={onApply}
-              style={{ flex: 1, marginLeft: 8 }}
-            />
+              style={styles.picker}
+              dropdownIconColor={styles.pickerIcon.color}
+            >
+              {INDUSTRY_OPTIONS.map((opt) => (
+                <Picker.Item key={opt} label={opt} value={opt} />
+              ))}
+            </Picker>
           </View>
+
+          {/* Visa Type */}
+          <Text style={styles.sectionLabel}>Visa Type</Text>
+          <View style={styles.chipsWrap}>
+            {VISA_TYPE_OPTIONS.map((opt) => {
+              const active = filters.visaType === opt;
+              return (
+                <TouchableOpacity
+                  key={opt}
+                  style={[styles.chip, active && styles.chipActive]}
+                  onPress={() => onChangeFilters({ ...filters, visaType: opt })}
+                  activeOpacity={0.75}
+                >
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>
+                    {opt}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
+
+        {/* Footer buttons */}
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.resetBtn} onPress={onReset} activeOpacity={0.8}>
+            <Text style={styles.resetBtnText}>Reset filters</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.goBtn} onPress={onApply} activeOpacity={0.8}>
+            <Text style={styles.goBtnText}>Go</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </Modal>
+    </SafeAreaView>
   );
 }

@@ -3,54 +3,75 @@ import { Colors } from '../../../constants/colors';
 
 export const jobCardStyles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.backgroundSecondary,
+    backgroundColor: Colors.backgroundPrimary,
     borderRadius: 12,
-    padding: 16,
-    marginHorizontal: 0,
-    marginBottom: 12,
-    flexDirection: 'column',
+    padding: 14,
+    marginBottom: 8,
     borderWidth: 1,
     borderColor: Colors.border,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3,
+    elevation: 1,
   },
-  topRow: {
+
+  // Row 1: title + bookmark icon (spans full width)
+  titleRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    gap: 12,
+    marginBottom: 1,
   },
-  infoBlock: {
+  title: {
     flex: 1,
+    fontSize: 16,
+    fontWeight: '700',
+    color: Colors.primary,
+    lineHeight: 22,
+    paddingRight: 10,
+    fontFamily: 'NunitoSans-Bold',
   },
+  bookmarkBtn: {
+    padding: 2,
+    marginTop: 1,
+  },
+
+  // Row 2: posted date
   postedDate: {
     fontSize: 12,
     color: Colors.textSecondary,
-    marginBottom: 4,
+    marginBottom: 10,
+    fontFamily: 'NunitoSans-Regular',
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-    lineHeight: 22,
+
+  // Row 3: meta + thumbnail side by side
+  bottomRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+  },
+  metaBlock: {
+    flex: 1,
+    paddingRight: 12,
+    gap: 4,
   },
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
-    gap: 6,
+    gap: 8,
   },
   metaText: {
-    fontSize: 13,
-    color: Colors.textSecondary,
+    fontSize: 14,
+    color: Colors.textPrimary,
     flex: 1,
+    fontFamily: 'NunitoSans-Regular',
   },
+
+  // Thumbnail
   thumbnail: {
-    width: 76,
-    height: 76,
+    width: 80,
+    height: 80,
     borderRadius: 10,
     backgroundColor: Colors.backgroundTertiary,
     alignItems: 'center',
@@ -59,18 +80,8 @@ export const jobCardStyles = StyleSheet.create({
     flexShrink: 0,
   },
   thumbnailImg: {
-    width: 76,
-    height: 76,
+    width: 80,
+    height: 80,
     borderRadius: 10,
-  },
-  bookmarkBtn: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
-    padding: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

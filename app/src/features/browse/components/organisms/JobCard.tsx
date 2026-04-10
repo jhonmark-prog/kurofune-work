@@ -1,6 +1,4 @@
-import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
-import { Card } from '../../../../components';
 import { Icon } from '../../../../components';
 import { Typography } from '../../../../components';
 import { JobMeta } from '../molecules/JobMeta';
@@ -21,60 +19,47 @@ export function JobCard({ job, onPress, onBookmark }: JobCardProps) {
       onPress={() => onPress(job)}
       activeOpacity={0.85}
     >
-      <View style={styles.topRow}>
-        <View style={styles.infoBlock}>
-          <Typography
-            variant="caption"
-            color={Colors.textTertiary}
-            style={styles.postedDate}
-          >
-            Posted {job.posted_at}
-          </Typography>
-
-          <Typography
-            variant="heading3"
-            style={styles.title}
-            color={Colors.primary}
-            numberOfLines={2}
-          >
-            {job.title}
-          </Typography>
-
-          <JobMeta
-            icon="business-outline"
-            text={job.company_name}
+      {/* Row 1: Title + Bookmark */}
+      <View style={styles.titleRow}>
+        <Typography
+          variant="heading3"
+          style={styles.title}
+          numberOfLines={2}
+        >
+          {job.title}
+        </Typography>
+        <TouchableOpacity
+          style={styles.bookmarkBtn}
+          onPress={() => onBookmark(job.id)}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Icon
+            name={job.is_saved ? 'bookmark' : 'bookmark-outline'}
+            size={22}
+            color={job.is_saved ? Colors.primary : Colors.primary}
           />
+        </TouchableOpacity>
+      </View>
 
-          <JobMeta
-            icon="location-outline"
-            text={job.location}
-          />
+      {/* Row 2: Posted date */}
+      <Typography style={styles.postedDate}>
+        Posted {job.posted_at}
+      </Typography>
 
-          <JobMeta
-            icon="cash-outline"
-            text={`JPY ${job.salary_min.toLocaleString()}~`}
-          />
+      {/* Row 3: Meta rows (left) + Thumbnail (right) */}
+      <View style={styles.bottomRow}>
+        <View style={styles.metaBlock}>
+          <JobMeta icon="business-outline" text={job.company_name} />
+          <JobMeta icon="location-outline" text={job.location} />
+          <JobMeta icon="cash-outline" text={`JPY ${job.salary_min.toLocaleString()}~`} />
         </View>
 
-        <View>
-          <View style={styles.thumbnail}>
-            {job.thumbnail_url ? (
-              <Image source={{ uri: job.thumbnail_url }} style={styles.thumbnailImg} />
-            ) : (
-              <Icon name="image-outline" size={28} color={Colors.textTertiary} />
-            )}
-          </View>
-          <TouchableOpacity
-            style={styles.bookmarkBtn}
-            onPress={() => onBookmark(job.id)}
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-          >
-            <Icon
-              name={job.is_saved ? 'bookmark' : 'bookmark-outline'}
-              size={20}
-              color={job.is_saved ? Colors.primary : Colors.textTertiary}
-            />
-          </TouchableOpacity>
+        <View style={styles.thumbnail}>
+          {job.thumbnail_url ? (
+            <Image source={{ uri: job.thumbnail_url }} style={styles.thumbnailImg} />
+          ) : (
+            <Icon name="image-outline" size={30} color={Colors.textTertiary} />
+          )}
         </View>
       </View>
     </TouchableOpacity>
