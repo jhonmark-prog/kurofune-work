@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { TextInput, View, Text, TextInputProps, TextStyle } from 'react-native';
 import { Colors } from '../../constants/colors';
 
@@ -36,7 +37,7 @@ const styles = {
 };
 
 export function Input({ style, error, ...props }: InputProps) {
-  const [isFocused, setIsFocused] = React.useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const inputStyle: TextStyle = {
     ...styles.input,

@@ -40,7 +40,7 @@
  * />
  */
 
-import React from 'react';
+import { ReactNode } from 'react';
 import {
   View,
   Text,
@@ -92,12 +92,12 @@ export interface HeaderBannerProps {
   /**
    * Content rendered to the right of the title block (icon buttons, avatar, etc.)
    */
-  rightContent?: React.ReactNode;
+  rightContent?: ReactNode;
   /**
    * Content rendered below the title row (tabs, search bar, chip row, etc.)
    * The banner expands vertically to accommodate this.
    */
-  bottomContent?: React.ReactNode;
+  bottomContent?: ReactNode;
   /** Additional styles applied to the outermost container */
   style?: ViewStyle;
   /** Status bar style. Defaults to 'light-content' since bg is always dark. */

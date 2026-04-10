@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import { View, ViewStyle } from 'react-native';
 import { Colors } from '../../constants/colors';
 
 interface CardProps {
-  children: React.ReactNode;
+  children: ReactNode;
   style?: ViewStyle;
   padding?: 'none' | 'small' | 'medium' | 'large';
   shadow?: boolean;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -29,7 +30,7 @@ export function FilterModal({
   onApply,
   onClose,
 }: FilterScreenProps) {
-  const [locationFocused, setLocationFocused] = React.useState(false);
+  const [locationFocused, setLocationFocused] = useState(false);
 
   return (
     <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
