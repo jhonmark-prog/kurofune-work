@@ -3,3 +3,4 @@ export { Card } from './Card';
 export { Icon } from './Icon';
 export { Input } from './Input';
 export { Typography } from './Typography';
+export { HeaderBanner } from './HeaderBanner';

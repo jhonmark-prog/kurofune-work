@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { Colors } from '../../constants/colors';
 
@@ -7,13 +7,17 @@ interface ProgressRingProps {
   percentage: number;
   size?: number;
   strokeWidth?: number;
+  progressColor?: string;
+  trackColor?: string;
   style?: any;
 }
 
 export function ProgressRing({
   percentage,
-  size = 52,
-  strokeWidth = 4,
+  size = 50,
+  strokeWidth = 5,
+  progressColor = Colors.primary,
+  trackColor = Colors.primaryLight,
   style
 }: ProgressRingProps) {
   const radius = (size - strokeWidth) / 2;
@@ -21,14 +25,14 @@ export function ProgressRing({
   const strokeDash = (percentage / 100) * circumference;
 
   return (
-    <View style={style}>
-      <Svg width={size} height={size}>
+    <View style={[style, { position: 'relative', alignItems: 'center', justifyContent: 'center' }]}>
+      <Svg width={size} height={size} style={{ position: 'absolute' }}>
         {/* Track */}
         <Circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke={Colors.primaryLight}
+          stroke={trackColor}
           strokeWidth={strokeWidth}
           fill="none"
         />
@@ -37,7 +41,7 @@ export function ProgressRing({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke={Colors.primary}
+          stroke={progressColor}
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={`${strokeDash} ${circumference}`}
@@ -47,6 +51,16 @@ export function ProgressRing({
           originY={size / 2}
         />
       </Svg>
+      <Text style={{
+        fontSize: 12,
+        fontWeight: '500',
+        color: Colors.textPrimary,
+        textAlign: 'center',
+        zIndex: 1,
+        fontFamily: 'NunitoSans-Bold',
+      }}>
+        {percentage}%
+      </Text>
     </View>
   );
 }

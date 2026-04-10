@@ -20,6 +20,7 @@ const styles = {
     fontSize: 16,
     color: Colors.textPrimary,
     backgroundColor: Colors.backgroundPrimary,
+    fontFamily: 'NunitoSans-Regular',
   },
   inputFocused: {
     borderColor: Colors.primary,
@@ -31,6 +32,7 @@ const styles = {
     fontSize: 12,
     color: Colors.danger,
     marginTop: 4,
+    fontFamily: 'NunitoSans-Regular',
   },
 };
 

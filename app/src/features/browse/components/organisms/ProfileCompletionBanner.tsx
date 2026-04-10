@@ -34,6 +34,8 @@ export function ProfileCompletionBanner({ percentage, onPress }: ProfileCompleti
       </View>
       <ProgressRing
         percentage={percentage}
+        progressColor={Colors.bannerProgress}
+        trackColor="#E8E8E8"
         style={styles.progressRing}
       />
     </TouchableOpacity>

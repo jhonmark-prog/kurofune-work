@@ -4,14 +4,23 @@ export const Colors = {
   primaryLight: '#E6F7F6',
   primaryDark: '#007A72',
 
+  // Profile completion banner colors
+  bannerBg: '#FFF4D6',
+  bannerTitle: '#EC9A29',
+  bannerText: '#232323',
+  bannerProgress: '#2FAE79',
+
   // Text
   textPrimary: '#000000',
   textSecondary: '#666666',
   textTertiary: '#999999',
   textInverse: '#FFFFFF',
 
+  // Button
+  buttonStrokePrimary: '#3F3F46',
+
   // Background
-  backgroundPrimary: '#FFFFFF',
+  backgroundPrimary: '#F6F6F6',
   backgroundSecondary: '#F5F5F5',
   backgroundTertiary: '#EBEBEB',
 

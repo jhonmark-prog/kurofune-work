@@ -25,7 +25,8 @@
         {
           "origin": false
         }
-      ]
+      ],
+      "expo-font"
     ]
   }
 }

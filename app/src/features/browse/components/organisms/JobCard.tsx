@@ -34,6 +34,7 @@ export function JobCard({ job, onPress, onBookmark }: JobCardProps) {
           <Typography
             variant="heading3"
             style={styles.title}
+            color={Colors.primary}
             numberOfLines={2}
           >
             {job.title}
@@ -49,11 +50,10 @@ export function JobCard({ job, onPress, onBookmark }: JobCardProps) {
             text={job.location}
           />
 
-          <View style={styles.salaryRow}>
-            <Typography variant="body" style={styles.salary}>
-              ¥ {job.salary_min.toLocaleString()}–
-            </Typography>
-          </View>
+          <JobMeta
+            icon="cash-outline"
+            text={`JPY ${job.salary_min.toLocaleString()}~`}
+          />
         </View>
 
         <View>

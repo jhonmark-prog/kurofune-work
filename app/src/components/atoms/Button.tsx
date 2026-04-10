@@ -44,9 +44,9 @@ const textStyles = {
 };
 
 const textSizes = {
-  small: { fontSize: 14 },
-  medium: { fontSize: 16 },
-  large: { fontSize: 18 },
+  small: { fontSize: 14, fontFamily: 'NunitoSans-Medium' },
+  medium: { fontSize: 16, fontFamily: 'NunitoSans-SemiBold' },
+  large: { fontSize: 18, fontFamily: 'NunitoSans-Bold' },
 };
 
 export function Button({

@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { HeaderBanner } from '../src/components/atoms/HeaderBanner';
 
 export default function ServiceScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Activity</Text>
-      <Text style={styles.placeholder}>（コンテンツ placeholder）</Text>
+      <HeaderBanner title="Activity" />
+      <View style={styles.content}>
+        <Text style={styles.placeholder}>（コンテンツ placeholder）</Text>
+      </View>
     </View>
   );
 }
@@ -12,15 +15,12 @@ export default function ServiceScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#ffffff',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#12A497',
-    marginBottom: 16,
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   placeholder: {
     fontSize: 14,

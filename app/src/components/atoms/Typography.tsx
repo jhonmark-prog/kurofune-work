@@ -13,31 +13,37 @@ const typographyStyles = {
     fontSize: 24,
     fontWeight: 'bold' as const,
     lineHeight: 32,
+    fontFamily: 'NunitoSans-Bold',
   },
   heading2: {
     fontSize: 20,
     fontWeight: '600' as const,
     lineHeight: 28,
+    fontFamily: 'NunitoSans-SemiBold',
   },
   heading3: {
     fontSize: 18,
     fontWeight: '600' as const,
     lineHeight: 24,
+    fontFamily: 'NunitoSans-SemiBold',
   },
   body: {
     fontSize: 16,
     fontWeight: 'normal' as const,
     lineHeight: 24,
+    fontFamily: 'NunitoSans-Regular',
   },
   caption: {
     fontSize: 14,
     fontWeight: 'normal' as const,
     lineHeight: 20,
+    fontFamily: 'NunitoSans-Regular',
   },
   label: {
     fontSize: 12,
     fontWeight: '500' as const,
     lineHeight: 16,
+    fontFamily: 'NunitoSans-Medium',
   },
 };
 

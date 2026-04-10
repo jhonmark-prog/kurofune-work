@@ -2,9 +2,21 @@ import { StyleSheet } from 'react-native';
 import { Colors } from '../../../constants/colors';
 
 export const homeStyles = StyleSheet.create({
+  homeBanner: {
+    position: 'relative',
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.backgroundSecondary,
+  },
+  content: {
+    flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  placeholder: {
+    fontSize: 14,
+    color: '#666666',
   },
   header: {
     backgroundColor: Colors.primary,
@@ -26,46 +38,52 @@ export const homeStyles = StyleSheet.create({
     gap: 12,
   },
   headerIconBtn: {
-    width: 36,
-    height: 36,
+    width: 28,
+    height: 28,
     borderRadius: 18,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: Colors.backgroundPrimary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   // Completion banner
   completionBanner: {
-    backgroundColor: Colors.backgroundPrimary,
+    backgroundColor: Colors.bannerBg,
     marginHorizontal: 16,
-    marginTop: 14,
-    marginBottom: 4,
-    borderRadius: 12,
-    padding: 14,
+    padding: 10,
+    paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: Colors.border,
+    borderWidth: 0,
+    borderTopWidth: 4,
+    borderTopColor: Colors.bannerTitle,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    marginTop: -25,
   },
   completionTextWrap: {
     flex: 1,
     paddingRight: 12,
   },
   completionLabel: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: Colors.primary,
-    marginBottom: 4,
-  },
-  completionSub: {
-    fontSize: 12,
-    color: Colors.textSecondary,
-    lineHeight: 17,
-  },
-  completionPct: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.primary,
+    color: Colors.bannerTitle,
+    // marginBottom: 6,
+    fontFamily: 'NunitoSans',
+  },
+  completionSub: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: Colors.bannerTitle,
+    lineHeight: 18,
+    fontFamily: 'NunitoSans',
+  },
+  completionPct: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: Colors.bannerText,
     marginTop: 4,
+    fontFamily: 'NunitoSans',
   },
   progressRing: {
     width: 52,
@@ -82,8 +100,8 @@ export const homeStyles = StyleSheet.create({
     paddingVertical: 14,
   },
   listHeaderTitle: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: '700',
     color: Colors.textPrimary,
   },
   filterBtn: {
@@ -95,6 +113,7 @@ export const homeStyles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     color: Colors.primary,
+    fontFamily: 'NunitoSans-SemiBold',
   },
   // Filter chips row (results mode)
   filtersChipRow: {
@@ -119,6 +138,7 @@ export const homeStyles = StyleSheet.create({
     fontSize: 12,
     color: Colors.textPrimary,
     fontWeight: '500',
+    fontFamily: 'NunitoSans-Medium',
   },
   filterChipClose: {
     marginLeft: 2,
@@ -129,6 +149,7 @@ export const homeStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 6,
     fontStyle: 'italic',
+    fontFamily: 'NunitoSans-Regular',
   },
   listContent: {
     paddingHorizontal: 16,
@@ -144,5 +165,6 @@ export const homeStyles = StyleSheet.create({
     color: Colors.textSecondary,
     textAlign: 'center',
     marginTop: 12,
+    fontFamily: 'NunitoSans-Regular',
   },
 });
