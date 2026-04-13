@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../constants/colors';
+import { Colors } from '../../src/constants/colors';
 
 export default function CreatePass() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function CreatePass() {
     <View style={styles.main}>
         <View style={{marginHorizontal: 25, flex: 1}}>
             <Image
-                source={require('../assets/images/header-logo-landscape.png')}
+                source={require('../../src/assets/images/header-logo-landscape.png')}
                 style={{width: 160, height: 30, marginTop: 50, alignSelf: 'center'}}
                 resizeMode='contain'
             />

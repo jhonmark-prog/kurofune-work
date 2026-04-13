@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../constants/colors';
+import { Colors } from '../../src/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Welcome() {
@@ -15,13 +15,13 @@ export default function Welcome() {
     <View style={styles.main}>
         <View style={{marginHorizontal: 25, flex: 1}}>
             <Image
-                source={require('../assets/images/header-logo-landscape.png')}
+                source={require('../../src/assets/images/header-logo-landscape.png')}
                 style={{width: 160, height: 30, marginTop: 50, alignSelf: 'center'}}
                 resizeMode='contain'
             />
             <View style={styles.container}>
                 <Image
-                    source={require('../assets/images/success-signup.png')}
+                    source={require('../../src/assets/images/success-signup.png')}
                     style={{width: 260, height: 200, alignSelf: 'center'}}
                     resizeMode='contain'
                 />

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../constants/colors';
+import { Colors } from '../../src/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Login() {
@@ -14,12 +14,12 @@ export default function Login() {
   return (
     <View style={styles.main}>
       <ImageBackground
-          source={require('../assets/images/blured-bg.png')}
+          source={require('../../src/assets/images/blured-bg.png')}
           style={styles.image_bg}
           resizeMode='cover'
       >
           <Image 
-              source={require('../assets/images/header-logo.png')}
+              source={require('../../src/assets/images/header-logo.png')}
               style={styles.image_logo}
               resizeMode='contain'
           />
