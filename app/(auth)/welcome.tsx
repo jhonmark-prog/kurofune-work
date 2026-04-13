@@ -2,13 +2,23 @@ import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable, S
 import { useRouter } from 'expo-router';
 import { Colors } from '../../src/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { login } from '../../src/store/userSlice';
 
 export default function Welcome() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const onProceedPress = () => {
-    router.dismissAll();
-    router.replace('/browse');
+    //TODO: temp data only; remove after having login API
+    dispatch(login({data: {
+        id: '1',
+        email: 'sample@gg.com',
+        password: 'sample123',
+        name: 'Sam Ple',
+        gender: 'm',
+        nationality: 'Philippines',
+    }}));
   }
 
   return (
