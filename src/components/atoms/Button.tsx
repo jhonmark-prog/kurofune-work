@@ -1,0 +1,100 @@
+import { TouchableOpacity, Text, ViewStyle, TextStyle } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '@/constants/colors';
+
+interface ButtonProps {
+  title?: string;
+  onPress: () => void;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
+  icon?: keyof typeof Ionicons.glyphMap;
+  iconPosition?: 'left' | 'right';
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+}
+
+export function Button({
+  title,
+  onPress,
+  variant = 'primary',
+  size = 'medium',
+  disabled = false,
+  icon,
+  iconPosition = 'left',
+  style,
+  textStyle,
+}: ButtonProps) {
+  const buttonStyle = [
+    styles.buttonVariants[variant],
+    styles.buttonSizes[size],
+    disabled && { opacity: 0.5 },
+    style,
+  ];
+
+  const titleStyle = [
+    styles.textVariants[variant],
+    styles.textSizes[size],
+    textStyle,
+  ];
+
+  return (
+    <TouchableOpacity
+      style={buttonStyle}
+      onPress={onPress}
+      disabled={disabled}
+      activeOpacity={0.8}
+    >
+      {icon && iconPosition === 'left' && (
+        <Ionicons
+          name={icon}
+          size={styles.textSizes[size].fontSize}
+          color={styles.textVariants[variant].color}
+          style={{ marginRight: title ? 8 : 0 }}
+        />
+      )}
+      {title && <Text style={titleStyle}>{title}</Text>}
+      {icon && iconPosition === 'right' && (
+        <Ionicons
+          name={icon}
+          size={styles.textSizes[size].fontSize}
+          color={styles.textVariants[variant].color}
+          style={{ marginLeft: title ? 8 : 0 }}
+        />
+      )}
+    </TouchableOpacity>
+  );
+}
+
+const styles = {
+  buttonVariants: {
+    primary: {
+      backgroundColor: Colors.primary,
+      borderColor: Colors.primary,
+    },
+    secondary: {
+      backgroundColor: 'transparent',
+      borderColor: Colors.primary,
+      borderWidth: 1,
+    },
+    ghost: {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+    },
+  },
+  buttonSizes: {
+    small: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 6 },
+    medium: { paddingHorizontal: 16, paddingVertical: 10, borderRadius: 8 },
+    large: { paddingHorizontal: 20, paddingVertical: 12, borderRadius: 10 },
+  },
+  textVariants: {
+    primary: { color: Colors.textInverse },
+    secondary: { color: Colors.primary },
+    ghost: { color: Colors.primary },
+  },
+  textSizes: {
+    small: { fontSize: 14, fontFamily: 'NunitoSans-Medium' },
+    medium: { fontSize: 16, fontFamily: 'NunitoSans-SemiBold' },
+    large: { fontSize: 18, fontFamily: 'NunitoSans-Bold' },
+  },
+};

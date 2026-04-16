@@ -23,7 +23,7 @@ export default function RootLayout() {
             name="(auth)" 
             options={{
               statusBarStyle: 'dark',
-              statusBarColor: 'transparent',
+              // statusBarColor: 'transparent',
               statusBarTranslucent: true
             }}
           />

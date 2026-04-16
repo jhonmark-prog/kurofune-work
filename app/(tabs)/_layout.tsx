@@ -1,12 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-
-const Colors = {
-  primary: '#12A497',
-  red: '#c8161d',
-  white: '#ffffff',
-  gray: '#666666',
-};
+import { Colors } from '@/constants/colors';
 
 function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   const icons: Record<string, keyof typeof Ionicons.glyphMap> = {
@@ -20,7 +14,7 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
     <Ionicons
       name={icons[name] || 'help'}
       size={24}
-      color={focused ? Colors.primary : Colors.gray}
+      color={focused ? Colors.primary : Colors.dark}
     />
   );
 }
@@ -42,23 +36,17 @@ export default function TabLayout() {
           height: 60,
           paddingBottom: 8,
           paddingTop: 8,
+          minHeight: 80,
         },
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
         },
-        headerStyle: {
-          backgroundColor: Colors.primary,
-        },
-        headerTintColor: Colors.white,
-        headerTitleStyle: {
-          fontWeight: '600',
-          fontSize: 18,
-        },
+        headerShown: false,
       }}
     >
       <Tabs.Screen
-        name="browse"
+        name="index"
         options={{
           title: 'Browse',
           tabBarIcon: ({ focused }) => <TabIcon name="browse" focused={focused} />,
