@@ -1,13 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { FilterModal } from '../../src/features/browse/components/organisms/FilterModal';
-import type { JobFilters } from '../../src/features/browse/types/browse.types';
-
-const DEFAULT_FILTERS: JobFilters = {
-  location: '',
-  industry: 'All',
-  visaType: 'All',
-};
+import { FilterBrowse } from '@/features/browse/components/organisms/FilterBrowse';
+import { useBrowse } from '@/features/browse/hooks/useBrowse';
+import { DEFAULT_FILTERS } from '@/features/browse/constants/browseData';
+import type { JobFilters } from '@/features/browse/types/browse.types';
 
 export default function FilterScreen() {
   const router = useRouter();
@@ -17,26 +13,38 @@ export default function FilterScreen() {
     visaType?: string;
   }>();
 
-  const [filters, setFilters] = useState<JobFilters>({
+  const { setFilters } = useBrowse();
+
+  const [localFilters, setLocalFilters] = useState<JobFilters>({
     location: params.location ?? '',
     industry: params.industry ?? 'All',
     visaType: params.visaType ?? 'All',
   });
 
+  useEffect(() => {
+    if (params.location !== undefined || params.industry !== undefined || params.visaType !== undefined) {
+      setLocalFilters({
+        location: params.location ?? '',
+        industry: params.industry ?? 'All',
+        visaType: params.visaType ?? 'All',
+      });
+    }
+  }, [params.location, params.industry, params.visaType]);
+
   function handleApply() {
-    // Pass selected filters back to the home screen via params then go back
+    setFilters(localFilters);
     router.navigate({
       pathname: '/(tabs)/',
       params: {
-        location: filters.location,
-        industry: filters.industry,
-        visaType: filters.visaType,
+        location: localFilters.location,
+        industry: localFilters.industry,
+        visaType: localFilters.visaType,
       },
     });
   }
 
   function handleReset() {
-    setFilters(DEFAULT_FILTERS);
+    setLocalFilters(DEFAULT_FILTERS);
   }
 
   function handleClose() {
@@ -44,9 +52,9 @@ export default function FilterScreen() {
   }
 
   return (
-    <FilterModal
-      filters={filters}
-      onChangeFilters={setFilters}
+    <FilterBrowse
+      filters={localFilters}
+      onChangeFilters={setLocalFilters}
       onReset={handleReset}
       onApply={handleApply}
       onClose={handleClose}

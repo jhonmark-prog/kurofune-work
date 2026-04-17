@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { HeaderBanner } from '../src/components/atoms/HeaderBanner';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { HeaderBanner } from '@/components/atoms/HeaderBanner';
 
 export default function AboutScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['bottom']}>
       <HeaderBanner title="Chats" />
       <View style={styles.content}>
         <Text style={styles.placeholder}>（コンテンツ placeholder）</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,11 +1,12 @@
 import { View, TouchableOpacity, Text } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { JobDetailHeader } from '../../src/features/job-detail/components/JobDetailHeader';
-import { JobDetailTabs } from '../../src/features/job-detail/components/JobDetailTabs';
-import { JobDetailContent } from '../../src/features/job-detail/components/JobDetailContent';
-import { useJobDetail } from '../../src/features/job-detail/hooks/useJobDetail';
-import { screenStyles as styles } from '../../src/features/job-detail/styles/JobDetailScreen.styles';
+import { Ionicons } from '@expo/vector-icons';
+import { HeaderBanner } from '@/components';
+import { JobInfoBlock, JobDetailTabs, JobDetailContent } from '@/features/job-detail/components';
+import { useJobDetail } from '@/features/job-detail/hooks/useJobDetail';
+import { screenStyles as styles } from '@/features/job-detail/styles/JobDetailScreen.styles';
+import { DUMMY_JOB_DETAIL } from '@/features/job-detail/constants/jobDetailData';
 
 export default function JobDetailScreen() {
   const router = useRouter();
@@ -17,30 +18,51 @@ export default function JobDetailScreen() {
     activeTab,
     setActiveTab,
     hasApplied,
+    isSaved,
     toggleSaved,
     applyForJob,
   } = useJobDetail(id ?? '');
 
+  const currentJob = job ?? DUMMY_JOB_DETAIL;
+
   return (
     <SafeAreaView style={styles.screen} edges={['bottom']}>
-      {/* Header — manages its own SafeAreaView for top edge */}
-      <JobDetailHeader
-        job={job}
-        onBack={() => router.back()}
-        onBookmark={toggleSaved}
+      <HeaderBanner
+        backgroundImage={currentJob.hero_image_url ? { uri: currentJob.hero_image_url } : undefined}
+        leftContent={
+          <TouchableOpacity
+            style={{ width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' }}
+            onPress={() => router.back()}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Ionicons name="arrow-back" size={18} color="#fff" />
+          </TouchableOpacity>
+        }
+        rightContent={
+          <TouchableOpacity
+            style={{ width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' }}
+            onPress={toggleSaved}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Ionicons
+              name={isSaved ? 'bookmark' : 'bookmark-outline'}
+              size={18}
+              color="#fff"
+            />
+          </TouchableOpacity>
+        }
       />
 
-      {/* Sticky tab bar */}
+      <JobInfoBlock job={currentJob} />
+
       <JobDetailTabs
         tabs={tabs}
         activeTab={activeTab}
         onTabPress={setActiveTab}
       />
 
-      {/* Scrollable tab content */}
-      <JobDetailContent job={job} activeTab={activeTab} />
+      <JobDetailContent job={currentJob} activeTab={activeTab} />
 
-      {/* Apply footer */}
       <View style={styles.footer}>
         <TouchableOpacity
           style={[styles.applyBtn, hasApplied && styles.applyBtnDisabled]}
