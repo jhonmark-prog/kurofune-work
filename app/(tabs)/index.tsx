@@ -47,7 +47,7 @@ export default function HomeScreen() {
       <View style={hasActiveFilters && styles.filterResultsHeader}>
         <View style={styles.listHeader}>
           <Typography variant='normalTitle' style={styles.listHeaderTitle}>
-            {hasActiveFilters ? 'Showing results for...' : 'All Job Posts'}
+            {hasActiveFilters ? 'Showing results for...' : 'All Job Posts'}test
           </Typography>
           <TouchableOpacity style={styles.filterBtn} onPress={handleFilterPress}>
             <View style={styles.filterIconWrapper}>
