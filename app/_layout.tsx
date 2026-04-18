@@ -1,24 +1,14 @@
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from '../src/store/store';
+import RootLayout from './rootLayout';
 
-export default function RootLayout() {
+export default function App() {
   return (
-    <>
-      <StatusBar style="light" />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: '#12A497',
-          },
-          headerTintColor: '#ffffff',
-          headerTitleStyle: {
-            fontWeight: '600',
-          },
-        }}
-      >
-        <Stack.Screen name="(tabs)" />
-      </Stack>
-    </>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RootLayout/>
+      </PersistGate>
+    </Provider>
   );
 }

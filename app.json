@@ -25,6 +25,16 @@
         {
           "origin": false
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/NunitoSans-Regular.ttf",
+            "./src/assets/fonts/NunitoSans-Medium.ttf",
+            "./src/assets/fonts/NunitoSans-Bold.ttf"
+          ]
+        }
       ]
     ]
   }
