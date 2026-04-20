@@ -1,10 +1,10 @@
-import { View, TouchableOpacity, Image } from 'react-native';
-import { Icon, Typography } from '@/components';
+import { View, Image, TouchableOpacity } from 'react-native';
+import { Card, Icon, Typography } from '@/components';
 import { JobMeta } from '../molecules/JobMeta';
 import { Colors } from '@/constants/colors';
-import { jobCardStyles as styles } from '../../styles/JobCard.styles';
 import type { Job } from '../../types/browse.types';
 import { ImagePlaceholder } from '@/assets/svg/ImagePlaceholder';
+import { jobCardStyles as styles } from '../../styles/JobCard.styles';
 
 interface JobCardProps {
   job: Job;
@@ -14,11 +14,7 @@ interface JobCardProps {
 
 export function JobCard({ job, onPress, onBookmark }: JobCardProps) {
   return (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => onPress(job)}
-      activeOpacity={0.85}
-    >
+    <Card onPress={() => onPress(job)}>
       <View style={styles.titleRow}>
         <Typography
           variant="heading3"
@@ -59,6 +55,6 @@ export function JobCard({ job, onPress, onBookmark }: JobCardProps) {
           )}
         </View>
       </View>
-    </TouchableOpacity>
+    </Card>
   );
 }

@@ -4,18 +4,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import userReducer from '../store/userSlice';
 import browseReducer from '../store/browseSlice';
 import jobDetailReducer from '../store/jobDetailSlice';
+import profileReducer from '../store/profileSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
   browse: browseReducer,
   jobDetail: jobDetailReducer,
+  profile: profileReducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage: AsyncStorage,
-  whitelist: ['user', 'browse'],
+  whitelist: ['user', 'browse', 'jobDetail', 'profile', ''],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

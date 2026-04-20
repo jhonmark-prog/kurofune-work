@@ -35,7 +35,7 @@ export const Colors = {
   // UI
   border: '#E0E0E0',
   borderFocus: '#00AC9F',
-  divider: '#F0F0F0',
+  divider: '#E6E6E6',
 
   // Status
   success: '#2E7D32',

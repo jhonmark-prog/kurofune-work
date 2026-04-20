@@ -1,10 +1,10 @@
-import { Text, TextProps, TextStyle } from 'react-native';
+import { Text, TextProps, TextStyle, StyleProp } from 'react-native';
 import { Colors } from '@/constants/colors';
 
 interface TypographyProps extends TextProps {
   variant?: 'heading1' | 'heading2' | 'heading3' | 'body' | 'caption' | 'normalTitle' | 'label';
   color?: string;
-  style?: TextStyle;
+  style?: StyleProp<TextStyle>;
 }
 
 const typographyStyles = {
