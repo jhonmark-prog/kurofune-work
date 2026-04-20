@@ -25,6 +25,7 @@ export const Colors = {
 
   // Button
   buttonStrokePrimary: '#3F3F46',
+  buttonDisabled: '#CCCCCC',
 
   // Background
   backgroundPrimary: '#F6F6F6',
