@@ -1,78 +1,133 @@
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable } from 'react-native';
+import { StyleSheet, View, Image, ImageBackground, TextInputEndEditingEvent, Keyboard } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../constants/colors';
-import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../../src/constants/colors';
+import { Input, Typography } from '@/components';
+import { useState } from 'react';
+import { staticStrings } from '@/constants/strings';
+import { isEmailValid } from '@/utils/common';
+import { AnimatedButton } from '@/components/atoms/AnimatedButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Login() {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [inputErr, setInputErr] = useState<string>();
+  const [hidePassword, setHidePassword] = useState(true);
   
   const onSignupPress = () => {
     router.dismissAll(); 
     router.replace('/');
   }
 
+  const onLoginPress = () => {
+    Keyboard.dismiss();
+    if(!isEmailValid(email) || !password){
+      if(inputErr == undefined)
+        setInputErr(staticStrings.invalidEmailOrPass);
+      return;
+    }
+  }
+
+  const onShowPassword = () => {
+    setHidePassword(!hidePassword);
+  }
+
+  const onEmailTextChange = (emailText: string) => {
+    setEmail(emailText.trim());
+  }
+
+  const onEmailDoneEditing = (e: TextInputEndEditingEvent) => {
+    const emailText = e.nativeEvent.text.trim();
+    if(emailText != '' && !isEmailValid(emailText)){
+      setInputErr(staticStrings.invalidEmailOrPass);
+    }else{
+      setInputErr(undefined);
+    }
+  }
+
+  const onPasswordDoneEditing = (e: TextInputEndEditingEvent) => {
+    const passwordText = e.nativeEvent.text;
+    if(passwordText == ''){
+      setInputErr(undefined);
+    }
+  }
+
   return (
-    <View style={styles.main}>
+    <SafeAreaView style={styles.main} edges={['bottom']}>
       <ImageBackground
-          source={require('../assets/images/blured-bg.png')}
-          style={styles.image_bg}
+          source={require('../../src/assets/images/blured-bg.png')}
+          style={styles.imageBackground}
           resizeMode='cover'
       >
           <Image 
-              source={require('../assets/images/header-logo.png')}
-              style={styles.image_logo}
+              source={require('../../src/assets/images/header-logo.png')}
+              style={styles.imageLogo}
               resizeMode='contain'
           />
       </ImageBackground>
       <View style={styles.container}>
-          <TextInput
-            style={{height: 50, width: 320, borderWidth: 1.5, padding: 10, backgroundColor: Colors.white, borderRadius: 5, borderColor: Colors.gray, fontSize: 16, fontWeight: '400'}}
-            // onChangeText={onChangeText}
-            // value={'dawdawd'}
-            placeholder="Email address"
+          <Input
+            value={email}
+            placeholder={staticStrings.email}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="email"
+            textContentType="emailAddress"
+            onChangeText={onEmailTextChange}
+            onEndEditing={onEmailDoneEditing}
+            helperText={inputErr ? ' ' : undefined}
           />
-          <TextInput
-            style={{height: 50, width: 320, borderWidth: 1.5, padding: 10, backgroundColor: Colors.white, borderRadius: 5, borderColor: Colors.gray, fontSize: 16, fontWeight: '400', marginTop: 10}}
-            // onChangeText={onChangeText}
-            // value={'dawdawd'}
-            placeholder="Password"
+          <Input
+            style={styles.spacing}
+            value={password}
+            placeholder={'Password'}
+            secureTextEntry={hidePassword}
+            textContentType="password"
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={setPassword}
+            icon={hidePassword ? 'eye' : 'eye-off'}
+            iconOnPress={onShowPassword}
+            iconColor={Colors.dark}
+            helperText={inputErr}
+            onEndEditing={onPasswordDoneEditing}
           />
-          <Pressable
-            style={{width: 120, padding: 12, backgroundColor: Colors.primary, borderRadius: 5, marginTop: 40}}
-          >
-            <Text style={{textAlign: 'center', color: Colors.white, fontSize: 14, fontWeight: '500'}}>Login</Text>
-          </Pressable>
-          <View style={{flexDirection: 'row', marginTop: 40}}>
-            <Text style={{fontSize: 14, fontWeight: '400'}}>Not yet registered?</Text>
-            <Pressable
-              style={{marginLeft: 10}}
-              onPress={onSignupPress}
-            >
-              <Text style={{textAlign: 'center', color: Colors.primary, fontSize: 14, fontWeight: '400'}}>Sign up here</Text>
-            </Pressable>
-          </View>
-          <Pressable
-              style={{marginLeft: 10, flexDirection: 'row', alignItems: 'center', marginTop: 20}}
-            >
-              <Ionicons
-                name={'globe'}
-                size={24}
-                color={Colors.primary}
+          <View style={styles.buttonContainers}>
+            <AnimatedButton
+              style={styles.loginButton}
+              title={staticStrings.login}
+              onPress={onLoginPress}
+            />
+            <View style={styles.signupHereButtonContainer}>
+              <Typography variant='normalTitle'>{staticStrings.notYetRegistered}</Typography>
+              <AnimatedButton
+                style={styles.singupHereButton}
+                variant={'text'}
+                title={staticStrings.signUpHere}
+                onPress={onSignupPress}
               />
-              <Text style={{textAlign: 'center', color: Colors.primary, fontSize: 14, fontWeight: '400', marginLeft: 10}}>EN</Text>
-            </Pressable>
+            </View>
+            <AnimatedButton
+              style={styles.languageButton}
+              variant={'text'}
+              icon={'globe'}
+              title={'EN'}
+            />
+          </View>
       </View>
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginBottom: 20}}>
-        <Pressable
-        >
-          <Text style={{textAlign: 'center', color: Colors.primary, fontSize: 12, fontWeight: '500'}}>Terms of Use</Text>
-        </Pressable>
-        <Pressable
-        >
-          <Text style={{textAlign: 'center', color: Colors.primary, fontSize: 12, fontWeight: '500'}}>Privacy Policy</Text>
-        </Pressable>
+      <View style={styles.bottomButtonsContainer}>
+        <AnimatedButton
+          variant={'text'}
+          title={staticStrings.termsOfUse}
+        />
+        <AnimatedButton
+          variant={'text'}
+          title={staticStrings.privacyPolicy}
+        />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -83,10 +138,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
+    paddingHorizontal: 20,
     marginTop: -20
   },
-  image_bg: {
+  imageBackground: {
     flex: 1, 
     justifyContent: 'center', 
     alignItems: 'center', 
@@ -94,8 +149,34 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20, 
     overflow: 'hidden'
   },
-  image_logo: {
+  imageLogo: {
     width: 120, 
     height: 120
+  },
+  buttonContainers: {
+    alignItems: 'center'
+  },
+  loginButton: {
+    marginTop: 25
+  },
+  signupHereButtonContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginTop: 25
+  },
+  singupHereButton: {
+    marginLeft: 4
+  },
+  languageButton: {
+    marginTop: 10
+  },
+  bottomButtonsContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-around', 
+    marginBottom: 10
+  },
+  spacing: {
+    marginTop: 10
   }
 });

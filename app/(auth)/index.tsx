@@ -1,66 +1,99 @@
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable } from 'react-native';
+import { StyleSheet, View, Image, ImageBackground, NativeSyntheticEvent, TextInputEndEditingEvent, Keyboard } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../constants/colors';
-import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../../src/constants/colors';
+import { Input, Typography } from '@/components';
+import { staticStrings } from '@/constants/strings';
+import { useState } from 'react';
+import { isEmailValid } from '@/utils/common';
+import { AnimatedButton } from '@/components/atoms/AnimatedButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Landing() {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [emailInputErr, setEmailInputErr] = useState<string>();
 
   const onLoginPress = () => {
     router.push('/login');
   }
 
   const onGetStartedPress = () => {
-    router.push('/register');
+    Keyboard.dismiss();
+    if(!isEmailValid(email)){
+      if(emailInputErr == undefined)
+        setEmailInputErr(staticStrings.emailInvalid);
+      return;
+    }
+
+    router.push({
+      pathname: '/register',
+      params: { tempUserDataEncoded: JSON.stringify({email: email}) }
+    });
+  }
+
+  const onEmailTextChange = (emailText: string) => {
+    setEmail(emailText.trim());
+  }
+
+  const onEmailDoneEditing = (e: TextInputEndEditingEvent) => {
+    const emailText = e.nativeEvent.text.trim();
+    if(emailText != '' && !isEmailValid(emailText)){
+      setEmailInputErr(staticStrings.emailInvalid);
+    }else{
+      setEmailInputErr(undefined);
+    }
   }
 
   return (
-    <View style={styles.main}>
+    <SafeAreaView style={styles.main} edges={['bottom']}>
       <ImageBackground
-          source={require('../assets/images/blured-bg.png')}
-          style={styles.image_bg}
+          source={require('../../src/assets/images/blured-bg.png')}
+          style={styles.imageBackground}
           resizeMode='cover'
       >
           <Image 
-              source={require('../assets/images/header-logo.png')}
-              style={styles.image_logo}
+              source={require('../../src/assets/images/header-logo.png')}
+              style={styles.imageLogo}
               resizeMode='contain'
           />
       </ImageBackground>
       <View style={styles.container}>
-          <TextInput
-            style={{height: 50, width: '85%', borderWidth: 1.5, padding: 10, backgroundColor: Colors.white, borderRadius: 5, borderColor: Colors.gray, fontSize: 16, fontWeight: '400'}}
-            // onChangeText={onChangeText}
-            // value={'dawdawd'}
-            placeholder="Email address"
+          <Input
+            value={email}
+            placeholder={staticStrings.email}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="email"
+            textContentType="emailAddress"
+            onChangeText={onEmailTextChange}
+            helperText={emailInputErr}
+            onEndEditing={onEmailDoneEditing}
           />
-          <Pressable
-            style={{width: 120, padding: 12, backgroundColor: Colors.primary, borderRadius: 5, marginTop: 40}}
-            onPress={onGetStartedPress}
-          >
-            <Text style={{textAlign: 'center', color: Colors.white, fontSize: 14, fontWeight: '500'}}>Get Started</Text>
-          </Pressable>
-          <View style={{flexDirection: 'row', marginTop: 40}}>
-            <Text style={{fontSize: 14, fontWeight: '400'}}>Already registered?</Text>
-            <Pressable
-              style={{marginLeft: 10}}
-              onPress={onLoginPress}
-            >
-              <Text style={{textAlign: 'center', color: Colors.primary, fontSize: 14, fontWeight: '400'}}>Login here</Text>
-            </Pressable>
-          </View>
-          <Pressable
-              style={{marginLeft: 10, flexDirection: 'row', alignItems: 'center', marginTop: 20}}
-            >
-              <Ionicons
-                name={'globe'}
-                size={24}
-                color={Colors.primary}
+          <View style={styles.buttonContainers}>
+            <AnimatedButton
+              style={styles.getStartedButton}
+              title={staticStrings.getStarted}
+              onPress={onGetStartedPress}
+            />
+            <View style={styles.loginHereButtonContainer}>
+              <Typography variant='normalTitle'>{staticStrings.alreadyRegistered}</Typography>
+              <AnimatedButton
+                style={styles.loginHereButton}
+                variant={'text'}
+                title={staticStrings.loginHere}
+                onPress={onLoginPress}
               />
-              <Text style={{textAlign: 'center', color: Colors.primary, fontSize: 14, fontWeight: '400', marginLeft: 10}}>EN</Text>
-            </Pressable>
+            </View>
+            <AnimatedButton
+              style={styles.languageButton}
+              variant={'text'}
+              icon={'globe'}
+              title={'EN'}
+            />
+          </View>
         </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -71,10 +104,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
+    paddingHorizontal: 20,
     marginTop: -20
   },
-  image_bg: {
+  imageBackground: {
     flex: 1, 
     justifyContent: 'center', 
     alignItems: 'center', 
@@ -82,8 +115,25 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20, 
     overflow: 'hidden'
   },
-  image_logo: {
+  imageLogo: {
     width: 120, 
     height: 120
+  },
+  buttonContainers: {
+    alignItems: 'center'
+  },
+  getStartedButton: {
+    marginTop: 25
+  },
+  loginHereButtonContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginTop: 25
+  },
+  loginHereButton: {
+    marginLeft: 4
+  },
+  languageButton: {
+    marginTop: 10
   }
 });

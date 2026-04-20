@@ -1,41 +1,14 @@
-import { Stack, useRouter, useSegments } from 'expo-router';
-import { useEffect } from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from '../src/store/store';
+import RootLayout from './rootLayout';
 
-export default function RootLayout() {
-  const userIsLoggedIn = false;
-  const segments = useSegments();
-  const router = useRouter();
-
-  useEffect(() => {
-    const alreadyAuthGroup = segments[0] === '(auth)';
-
-    if (!userIsLoggedIn && !alreadyAuthGroup) {
-      router.replace('/');
-    }else if(userIsLoggedIn){
-      router.replace('/browse');
-    }
-  }, [userIsLoggedIn]);
-
+export default function App() {
   return (
-    <>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: '#12A497',
-          },
-          headerTintColor: '#ffffff',
-          headerTitleStyle: {
-            fontWeight: '600',
-          },
-          statusBarStyle: 'dark',
-          statusBarColor: 'transparent',
-          statusBarTranslucent: true
-        }}
-      >
-        <Stack.Screen name="(auth)"/>
-        <Stack.Screen name="(tabs)"/>
-      </Stack>
-    </>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RootLayout/>
+      </PersistGate>
+    </Provider>
   );
 }
