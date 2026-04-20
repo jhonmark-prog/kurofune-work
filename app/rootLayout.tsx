@@ -6,25 +6,13 @@ export default function RootLayout() {
   const userIsLoggedIn = useSelector(selectUserIsLoggedIn);
 
   return (
-    <Stack
-        screenOptions={{
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: '#12A497',
-          },
-            headerTintColor: '#ffffff',
-            headerTitleStyle: {
-            fontWeight: '600',
-          },
-        }}
-    >
+    <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={!userIsLoggedIn}>
           <Stack.Screen 
             name="(auth)" 
-            options={{
-              statusBarStyle: 'dark',
-              // statusBarColor: 'transparent',
-              statusBarTranslucent: true
+            options={{ 
+              statusBarStyle: 'dark', 
+              gestureEnabled: false 
             }}
           />
         </Stack.Protected>

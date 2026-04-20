@@ -1,51 +1,64 @@
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable, ScrollView, BackHandler } from 'react-native';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { Colors } from '../../src/constants/colors';
-import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
-import { login } from '../../src/store/userSlice';
+import { login, User } from '../../src/store/userSlice';
+import { useCallback } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AnimatedButton } from '@/components/atoms/AnimatedButton';
+import { staticStrings } from '@/constants/strings';
+import { Typography } from '@/components';
 
 export default function Welcome() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { userDataEncoded } = useLocalSearchParams<{userDataEncoded: string}>();
+  const userDataFromParams = userDataEncoded ? (JSON.parse(userDataEncoded) as User) : null;
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        router.dismissTo('/');
+        return true;
+      };
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => subscription.remove();
+    }, [])
+  );
 
   const onProceedPress = () => {
-    //TODO: temp data only; remove after having login API
-    dispatch(login({data: {
-        id: '1',
-        email: 'sample@gg.com',
-        password: 'sample123',
-        name: 'Sam Ple',
-        gender: 'm',
-        nationality: 'Philippines',
-    }}));
+    if(userDataFromParams){
+      dispatch(login({data: {
+          id: '1',
+          ...userDataFromParams
+      }}));
+    }
   }
 
   return (
-    <View style={styles.main}>
-        <View style={{marginHorizontal: 25, flex: 1}}>
-            <Image
-                source={require('../../src/assets/images/header-logo-landscape.png')}
-                style={{width: 160, height: 30, marginTop: 50, alignSelf: 'center'}}
-                resizeMode='contain'
-            />
-            <View style={styles.container}>
-                <Image
-                    source={require('../../src/assets/images/success-signup.png')}
-                    style={{width: 260, height: 200, alignSelf: 'center'}}
-                    resizeMode='contain'
-                />
-                <Text style={{textAlign: 'center', fontWeight: '700', marginTop: 5, fontSize: 18, color: Colors.black}}>Thank you!</Text>
-                <Text style={{textAlign: 'center', fontWeight: '400', marginTop: 5, fontSize: 14, color: Colors.darkGray}}>You have successfully signed up! Now enjoy, and make the most out of this app!</Text>
-            </View>
-            <Pressable
-                style={{padding: 12, backgroundColor: Colors.primary, borderRadius: 5, marginBottom: 20}}
-                onPress={onProceedPress}
-                >
-                <Text style={{textAlign: 'center', color: Colors.white, fontSize: 14, fontWeight: '500'}}>Let's go!</Text>
-            </Pressable>
-        </View>
-    </View>
+    <SafeAreaView style={styles.main} edges={['bottom']}>
+      <Image
+          source={require('../../src/assets/images/header-logo-landscape.png')}
+          style={styles.logo}
+          resizeMode='contain'
+      />
+      <View style={styles.container}>
+          <Image
+              source={require('../../src/assets/images/success-signup.png')}
+              style={styles.graphic}
+              resizeMode='contain'
+          />
+          <View style={styles.textContainer}>
+            <Typography variant='heading3'>{staticStrings.thankYou}</Typography>
+            <Typography style={styles.text} color={Colors.dark} variant='normalTitle'>{staticStrings.successCreateInfoText}</Typography>
+          </View>
+      </View>
+      <AnimatedButton
+          style={styles.letsgoButton}
+          title={staticStrings.letsGo}
+          onPress={onProceedPress}
+      />
+    </SafeAreaView>
   );
 }
 
@@ -53,10 +66,33 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: Colors.white,
+    paddingHorizontal: 20
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     marginTop: -40
+  },
+  logo: {
+    width: 160, 
+    height: 30, 
+    marginTop: 50, 
+    alignSelf: 'center'
+  },
+  graphic: {
+    width: 260, 
+    height: 200, 
+    alignSelf: 'center'
+  },
+  letsgoButton: {
+    marginBottom: 15
+  },
+  textContainer: {
+    marginTop: 30, 
+    alignItems: 'center'
+  },
+  text: {
+    textAlign: 'center', 
+    marginTop: 5
   }
 });

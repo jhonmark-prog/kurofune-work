@@ -2,13 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface User {
   id?: string;
-  name?: string;
+  fullName?: string;
   email?: string;
   password?: string;
   gender?: string;
   birthday?: string;
   nationality?: string;
   photo?: string;
+}
+
+export interface TempUser extends User {
+    confirmPassword?: string;
 }
 
 const initialUser: User = {};
