@@ -7,9 +7,12 @@ import { staticStrings } from '@/constants/strings';
 import { isEmailValid } from '@/utils/common';
 import { AnimatedButton } from '@/components/atoms/AnimatedButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
+import { login } from '@/store/userSlice';
 
 export default function Login() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [inputErr, setInputErr] = useState<string>();
@@ -22,11 +25,17 @@ export default function Login() {
 
   const onLoginPress = () => {
     Keyboard.dismiss();
-    if(!isEmailValid(email) || !password){
-      if(inputErr == undefined)
-        setInputErr(staticStrings.invalidEmailOrPass);
-      return;
-    }
+    //TODO: add login API call
+    // if(!isEmailValid(email) || !password){
+    //   if(inputErr == undefined)
+    //     setInputErr(staticStrings.invalidEmailOrPass);
+    //   return;
+    // }
+    dispatch(login({data: {
+        id: '1',
+        fullName: 'Sam Ple',
+        email: 'sample@test.com',
+    }}));
   }
 
   const onShowPassword = () => {

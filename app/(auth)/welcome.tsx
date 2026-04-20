@@ -56,7 +56,7 @@ export default function Welcome() {
       <AnimatedButton
           style={styles.letsgoButton}
           title={staticStrings.letsGo}
-          // onPress={onProceedPress}
+          onPress={onProceedPress}
       />
     </SafeAreaView>
   );
