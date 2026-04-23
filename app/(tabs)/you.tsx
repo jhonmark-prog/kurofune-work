@@ -1,30 +1,80 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeaderBanner } from '@/components/atoms/HeaderBanner';
+import { useProfile } from '@/features/profile/hooks/useProfile';
+import { ProfileView } from '@/features/profile/components/ProfileView';
+import type { Profile, Experience, Education } from '@/features/profile/types/profile.types';
 
-export default function ContactScreen() {
+export default function YouScreen() {
+  const {
+    profile,
+    experiences,
+    educations,
+    editModalVisible,
+    activeEditTab,
+    openEdit,
+    closeEdit,
+    switchEditTab,
+    savePersonal,
+    addExperience,
+    updateExperience,
+    removeExperience,
+    addEducation,
+    updateEducation,
+    removeEducation,
+  } = useProfile();
+
+  // Save experiences: diff the incoming list against current state
+  const handleSaveExperiences = (updated: Experience[]) => {
+    const currentIds = experiences.map((e) => e.id);
+    const updatedIds = updated.map((e) => e.id);
+
+    // Remove deleted
+    currentIds.forEach((id) => {
+      if (!updatedIds.includes(id)) removeExperience(id);
+    });
+
+    // Add new or update existing
+    updated.forEach((exp) => {
+      if (currentIds.includes(exp.id)) {
+        updateExperience(exp.id, exp);
+      } else {
+        addExperience(exp);
+      }
+    });
+
+    closeEdit();
+  };
+
+  const handleSaveEducations = (updated: Education[]) => {
+    const currentIds = educations.map((e) => e.id);
+    const updatedIds = updated.map((e) => e.id);
+
+    currentIds.forEach((id) => {
+      if (!updatedIds.includes(id)) removeEducation(id);
+    });
+
+    updated.forEach((edu) => {
+      if (currentIds.includes(edu.id)) {
+        updateEducation(edu.id, edu);
+      } else {
+        addEducation(edu);
+      }
+    });
+
+    closeEdit();
+  };
+
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
-      <HeaderBanner title="You" />
-      <View style={styles.content}>
-        <Text style={styles.placeholder}>（コンテンツ placeholder）</Text>
-      </View>
-    </SafeAreaView>
+    <ProfileView
+      profile={profile}
+      experiences={experiences}
+      educations={educations}
+      editModalVisible={editModalVisible}
+      activeEditTab={activeEditTab}
+      onOpenEdit={openEdit}
+      onCloseEdit={closeEdit}
+      onTabChange={switchEditTab}
+      onSavePersonal={savePersonal}
+      onSaveExperiences={handleSaveExperiences}
+      onSaveEducations={handleSaveEducations}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  placeholder: {
-    fontSize: 14,
-    color: '#666666',
-  },
-});
