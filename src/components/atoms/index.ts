@@ -5,3 +5,4 @@ export { Input } from './Input';
 export { Typography } from './Typography';
 export { HeaderBanner } from './HeaderBanner';
 export { ScrollView } from './ScrollView';
+export { PromptModal } from './Modal';
