@@ -4487,6 +4487,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
+  languageName: node
+  linkType: hard
+
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -4745,7 +4752,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.8.15":
+"dayjs@npm:^1.11.13, dayjs@npm:^1.11.20, dayjs@npm:^1.8.15":
   version: 1.11.20
   resolution: "dayjs@npm:1.11.20"
   checksum: 8af525e2aa100c8db9923d706c42b2b2d30579faf89456619413a5c10916efc92c2b166e193c27c02eb3174b30aa440ee1e7b72b0a2876b3da651d204db848a0
@@ -6481,6 +6488,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jalali-plugin-dayjs@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "jalali-plugin-dayjs@npm:1.1.4"
+  checksum: 2a8fada01435fab90d754d87e383385a9b80f303cee3bf8425db91c7f5bd7be48f0995774b21d903ae840499f12762dc34392d757e3feb4516af6b7e0a2b651b
+  languageName: node
+  linkType: hard
+
 "jest-changed-files@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-changed-files@npm:29.7.0"
@@ -7117,6 +7131,7 @@ __metadata:
     "@types/react-native": "npm:^0.73.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.0"
     "@typescript-eslint/parser": "npm:^7.0.0"
+    dayjs: "npm:^1.11.20"
     dotenv: "npm:^17.4.1"
     eslint: "npm:^8.57.0"
     expo: "npm:^55.0.14"
@@ -7127,9 +7142,11 @@ __metadata:
     jest: "npm:^29.7.0"
     react: "npm:19.2.0"
     react-native: "npm:0.83.4"
+    react-native-country-codes-picker: "npm:^2.3.5"
     react-native-safe-area-context: "npm:~5.6.2"
     react-native-screens: "npm:~4.23.0"
     react-native-svg: "npm:^15.15.4"
+    react-native-ui-datepicker: "npm:^3.1.3"
     react-redux: "npm:^9.2.0"
     redux-persist: "npm:^6.0.0"
     typescript: "npm:~5.9.2"
@@ -7345,6 +7362,13 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 14628013e9e7f65ac904fc82fd8ecb0e55a9c4c2416434b1dd9cf64ae70a8937f0b15376a39a68248530adc64887ed0fe2b75204b2c9ec3eea1cb2d66ddd125d
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.21":
+  version: 4.18.1
+  resolution: "lodash@npm:4.18.1"
+  checksum: 757228fc68805c59789e82185135cf85f05d0b2d3d54631d680ca79ec21944ec8314d4533639a14b8bcfbd97a517e78960933041a5af17ecb693ec6eecb99a27
   languageName: node
   linkType: hard
 
@@ -8964,6 +8988,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-country-codes-picker@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "react-native-country-codes-picker@npm:2.3.5"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: e03947812eaa39cf2f4f0b938611936641aa5274ffe66c2e7661442e0b8bbc58485dfed7417bbbb9df9232f72365058cdd336d87b02149988b8609840d65abb7
+  languageName: node
+  linkType: hard
+
 "react-native-is-edge-to-edge@npm:^1.2.1":
   version: 1.3.1
   resolution: "react-native-is-edge-to-edge@npm:1.3.1"
@@ -9008,6 +9042,22 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 1fb8e3ac9d45a4db74731a006cd32f883051844f361974dff49e1a4142aa7c1a0d87e0b04fff06a1932ca53940bcfb94e45e01a845eb451d4659fbf07092629e
+  languageName: node
+  linkType: hard
+
+"react-native-ui-datepicker@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "react-native-ui-datepicker@npm:3.1.3"
+  dependencies:
+    clsx: "npm:^2.1.1"
+    dayjs: "npm:^1.11.13"
+    jalali-plugin-dayjs: "npm:^1.1.4"
+    lodash: "npm:^4.17.21"
+    tailwind-merge: "npm:^3.0.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: ba9a157c826c2ee7d59ca85f178fe5859826aaaacb942a621c6137f65f654630dde68e55a6a206a51d99d7d7fc1d80d960e3990be5afde06989a1cfac26e0a86
   languageName: node
   linkType: hard
 
@@ -10010,6 +10060,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^3.0.1":
+  version: 3.5.0
+  resolution: "tailwind-merge@npm:3.5.0"
+  checksum: 4dc588f5b5296ba3f38e1ebb41f02b6d24a8c5bb45e44b33748c118fb4b5767dd0efc464431ca3e75404056b618b5f67bec3708158baa65fed8a2fc9201e0c53
   languageName: node
   linkType: hard
 

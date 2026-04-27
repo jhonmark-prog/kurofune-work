@@ -1,18 +1,21 @@
-import { StyleSheet, View, Image, ImageBackground, TextInputEndEditingEvent, Keyboard } from 'react-native';
+import { StyleSheet, View, Image, ImageBackground, TextInputEndEditingEvent, Keyboard, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '../../src/constants/colors';
-import { Input, Typography } from '@/components';
-import { useState } from 'react';
+import { Input, PromptModal, Typography } from '@/components';
+import { useRef, useState } from 'react';
 import { staticStrings } from '@/constants/strings';
 import { isEmailValid } from '@/utils/common';
 import { AnimatedButton } from '@/components/atoms/AnimatedButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { login } from '@/store/userSlice';
+import { loginUser } from '@/utils/services';
+import { PrompModalActions } from '@/components/atoms/Modal';
 
 export default function Login() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const loadingModal = useRef<PrompModalActions>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [inputErr, setInputErr] = useState<string>();
@@ -25,17 +28,29 @@ export default function Login() {
 
   const onLoginPress = () => {
     Keyboard.dismiss();
+    if(!isEmailValid(email) || !password){
+      if(inputErr == undefined)
+        setInputErr(staticStrings.invalidEmailOrPass);
+      return;
+    }
+    handleLogin();
+  }
 
-
-
-
-
-
-    dispatch(login({data: {
-        id: '1',
-        fullName: 'Sam Ple',
-        email: 'sample@test.com',
-    }}));
+  const handleLogin = async () => {
+    onLoadingModalShow();
+    const loginResult = await loginUser({
+      email: email,
+      password: password
+    });
+    setTimeout(()=>{
+      onLoadingModalHide();
+      if(loginResult.user && loginResult.user.active){
+        dispatch(login({data: loginResult.user}));
+      }else{
+        if(inputErr == undefined)
+          setInputErr(staticStrings.invalidEmailOrPass);
+      }
+    },1000);
   }
 
   const onShowPassword = () => {
@@ -60,6 +75,14 @@ export default function Login() {
     if(passwordText == ''){
       setInputErr(undefined);
     }
+  }
+
+  const onLoadingModalShow = () => {
+    loadingModal.current?.show();
+  }
+
+  const onLoadingModalHide = () => {
+    loadingModal.current?.hide();
   }
 
   return (
@@ -136,6 +159,12 @@ export default function Login() {
           title={staticStrings.privacyPolicy}
         />
       </View>
+      <PromptModal ref={loadingModal} showHeader={false} enableBackButtonClose={false}>
+        <View style={styles.loadingModal}>
+          <ActivityIndicator size={'large'} color={Colors.primary}/>
+          <Typography style={styles.loadingModalText} variant='buttonTitle'>{staticStrings.signingIn}</Typography>
+        </View>
+      </PromptModal>
     </SafeAreaView>
   );
 }
@@ -187,5 +216,14 @@ const styles = StyleSheet.create({
   },
   spacing: {
     marginTop: 10
+  },
+  loadingModal: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginTop: 25, 
+    marginLeft: 10
+  },
+  loadingModalText: {
+    marginLeft: 20
   }
 });

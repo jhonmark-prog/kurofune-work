@@ -28,10 +28,7 @@ export default function Welcome() {
 
   const onProceedPress = () => {
     if(userDataFromParams){
-      dispatch(login({data: {
-          id: '1',
-          ...userDataFromParams
-      }}));
+      dispatch(login({data: userDataFromParams}));
     }
   }
 

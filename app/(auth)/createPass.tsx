@@ -1,13 +1,17 @@
-import { StyleSheet, View, Image, ScrollView, Keyboard, TextInputEndEditingEvent, BackHandler } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Keyboard, TextInputEndEditingEvent, BackHandler, ActivityIndicator } from 'react-native';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { Colors } from '../../src/constants/colors';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Input, Typography } from '@/components';
+import { Input, PromptModal, Typography } from '@/components';
 import { staticStrings } from '@/constants/strings';
 import { AnimatedButton } from '@/components/atoms/AnimatedButton';
 import { isPasswordValid } from '@/utils/common';
 import { TempUser, User } from '@/store/userSlice';
+import { PrompModalActions } from '@/components/atoms/Modal';
+import { loginUser, registerUser } from '@/utils/services';
+
+const PROMPT_HEIGHT = 385;
 
 type RequiredInputErrors = {
   password?: string;
@@ -18,6 +22,8 @@ export default function CreatePass() {
   const router = useRouter();
   const { tempUserDataEncoded } = useLocalSearchParams<{tempUserDataEncoded: string}>();
   const tempUserDataFromParams = tempUserDataEncoded ? (JSON.parse(tempUserDataEncoded) as TempUser) : null;
+  const promptModal = useRef<PrompModalActions>(null);
+  const loadingModal = useRef<PrompModalActions>(null);
   const [password, setPassword] = useState(tempUserDataFromParams?.password || '');
   const [confirmPassword, setConfirmPassword] = useState(tempUserDataFromParams?.confirmPassword || '');
   const [hidePassword, setHidePassword] = useState(false);
@@ -46,19 +52,19 @@ export default function CreatePass() {
     }, [password, confirmPassword])
   );
 
+  const getTempUserInfo = (): User => {
+    const userInfo: User = {
+      ...(tempUserDataFromParams as Omit<TempUser, 'confirmPassword'>),
+      password: password
+    }
+    return userInfo;
+  }
+
   const onSubmitPress = () => {
       Keyboard.dismiss();
       if (!validateRequiredInputs()) return;
 
-      const userInfo: User = {
-        ...(tempUserDataFromParams as Omit<TempUser, 'confirmPassword'>),
-        password: password
-      }
-
-      router.push({
-          pathname: '/welcome',
-          params: {userDataEncoded: JSON.stringify(userInfo)}
-      });
+      onPromptModalShow(getTempUserInfo());
   }
 
   const onShowPassword = () => {
@@ -90,6 +96,61 @@ export default function CreatePass() {
         confirmPassword: confirmPasswordText === '' ? staticStrings.emptyConfirmPassword : 
         password !== confirmPasswordText ? staticStrings.incorrectConfirmPassword : undefined
       }));
+  }
+
+  const onPromptModalShow = (userInfo: User) => {
+      const banner = (
+        <View style={styles.bannerMain}>
+          <Typography variant='body'>{`${staticStrings.emailShort}: ${userInfo.email}`}</Typography>
+          <Typography variant='body'>{`${staticStrings.fullName}: ${userInfo.fullName}`}</Typography>
+          <Typography variant='body'>{`${staticStrings.gender}: ${userInfo.gender}`}</Typography>
+          { userInfo.birthday && <Typography variant='body'>{`${staticStrings.dateOfBirth}: ${userInfo.birthday}`}</Typography>}
+          <Typography variant='body'>{`${staticStrings.nationality}: ${userInfo.nationality}`}</Typography>
+        </View>
+      )
+      promptModal.current?.show(banner);
+  }
+
+  const onPromptModalClose = () => {
+      promptModal.current?.hide();
+  }
+
+  const onProceedRegistrationPress = () => {
+    onPromptModalClose();
+    handleUserRegistration();
+  }
+
+  const onLoadingModalShow = () => {
+    loadingModal.current?.show();
+  }
+
+  const onLoadingModalHide = () => {
+    loadingModal.current?.hide();
+  }
+
+  const handleUserRegistration = async () => {
+    onLoadingModalShow();
+    const userInfo = getTempUserInfo();
+    const registrationResult = await registerUser(getTempUserInfo());
+    if(registrationResult.data && registrationResult.data.email){
+      const loginResult = await loginUser({
+        email: registrationResult.data.email,
+        password: userInfo.password
+      });
+      setTimeout(()=>{
+        onLoadingModalHide();
+        if(loginResult.user){
+          router.push({
+              pathname: '/welcome',
+              params: {userDataEncoded: JSON.stringify(loginResult.user)}
+          });
+        }
+      },1000);
+    }else{
+      setTimeout(()=>{
+        onLoadingModalHide();
+      },1000);
+    }
   }
 
   return (
@@ -140,6 +201,34 @@ export default function CreatePass() {
                   />
               </View>
           </ScrollView>
+          <PromptModal 
+              ref={promptModal}
+              title={staticStrings.userRegistration}
+              height={PROMPT_HEIGHT}
+          >
+              <View>
+                  <Typography variant='body'>{staticStrings.userRegistrationPrompt1}</Typography>
+                  <View style={styles.promptButtonContainer}>
+                      <AnimatedButton
+                          title={staticStrings.cancel}
+                          variant='text'
+                          onPress={onPromptModalClose}
+                          textStyle={styles.cancelButtonText}
+                      />
+                      <AnimatedButton
+                          style={styles.proceedButton}
+                          title={staticStrings.proceed}
+                          onPress={onProceedRegistrationPress}
+                      />
+                  </View>
+              </View>
+          </PromptModal>
+          <PromptModal ref={loadingModal} showHeader={false} enableBackButtonClose={false}>
+            <View style={styles.loadingModal}>
+              <ActivityIndicator size={'large'} color={Colors.primary}/>
+              <Typography style={styles.loadingModalText} variant='buttonTitle'>{staticStrings.creatingUserAccount}</Typography>
+            </View>
+          </PromptModal>
           <View style={styles.nextButtonContainer}>
               <AnimatedButton
                   style={styles.nextButton}
@@ -175,5 +264,32 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     marginBottom: 15
+  },
+  promptButtonContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'flex-end', 
+    marginTop: 20
+  },
+  bannerMain: {
+    padding: 10, 
+    backgroundColor: Colors.bannerBg, 
+    borderRadius: 7, 
+    marginBottom: 15
+  },
+  cancelButtonText: {
+    color: Colors.textTitleBlue
+  },
+  proceedButton: {
+    marginLeft: 20
+  },
+  loadingModal: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginTop: 25, 
+    marginLeft: 10
+  },
+  loadingModalText: {
+    marginLeft: 20
   }
 });
