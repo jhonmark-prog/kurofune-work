@@ -75,7 +75,6 @@ export function EducationTab({ educations, onSave }: EducationTabProps) {
       >
         {items.map((edu) => (
           <View key={edu.id}>
-            {/* Saved entry card */}
             {!edu.isEditing && (
               <View style={styles.entryCard}>
                 <View style={styles.entryCardHeader}>
@@ -116,8 +115,6 @@ export function EducationTab({ educations, onSave }: EducationTabProps) {
                 </View>
               </View>
             )}
-
-            {/* Edit / new entry form */}
             {edu.isEditing && (
               <View style={styles.newEntryBlock}>
                 <View style={styles.newEntryBlockHeader}>

@@ -65,25 +65,18 @@ export function ProfileView({
       )}
 
       <ScrollView style={styles.content} contentStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* Profile Info (Identity + Contact + About) */}
         <ProfileInfoCard
           profile={profile}
           onEdit={() => onOpenEdit('Personal')}
         />
-
-        {/* Experience */}
         <ProfileExperienceSection
           experiences={experiences}
           onEdit={() => onOpenEdit('Experience')}
         />
-
-        {/* Education */}
         <ProfileEducationSection
           educations={educations}
           onEdit={() => onOpenEdit('Education')}
         />
-
-        {/* CV/Resume */}
         <ProfileCVSection
           cvFilename={profile.cv_filename}
           cvUploadedAt={profile.cv_uploaded_at}
@@ -91,7 +84,6 @@ export function ProfileView({
         />
       </ScrollView>
 
-      {/* Edit modal */}
       <ProfileEditModal
         visible={editModalVisible}
         activeTab={activeEditTab}

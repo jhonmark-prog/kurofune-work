@@ -15,7 +15,7 @@ export const useAppFonts = () => {
 
   useEffect(() => {
     if (error) {
-      // Font loading failed, fallback to system fonts
+
     }
   }, [error]);
 

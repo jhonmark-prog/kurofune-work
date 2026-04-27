@@ -77,7 +77,6 @@ export function ExperienceTab({ experiences, onSave }: ExperienceTabProps) {
       >
         {items.map((exp) => (
           <View key={exp.id}>
-            {/* Saved entry display card */}
             {!exp.isEditing && (
               <View style={styles.entryCard}>
                 <View style={styles.entryCardHeader}>
@@ -117,8 +116,6 @@ export function ExperienceTab({ experiences, onSave }: ExperienceTabProps) {
                 </View>
               </View>
             )}
-
-            {/* Edit / new entry form */}
             {exp.isEditing && (
               <View style={styles.newEntryBlock}>
                 <View style={styles.newEntryBlockHeader}>

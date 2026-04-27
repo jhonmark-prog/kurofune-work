@@ -17,7 +17,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [inputErr, setInputErr] = useState<string>();
   const [hidePassword, setHidePassword] = useState(true);
-  
+
   const onSignupPress = () => {
     router.dismissAll(); 
     router.replace('/');
@@ -25,12 +25,12 @@ export default function Login() {
 
   const onLoginPress = () => {
     Keyboard.dismiss();
-    //TODO: add login API call
-    // if(!isEmailValid(email) || !password){
-    //   if(inputErr == undefined)
-    //     setInputErr(staticStrings.invalidEmailOrPass);
-    //   return;
-    // }
+
+
+
+
+
+
     dispatch(login({data: {
         id: '1',
         fullName: 'Sam Ple',

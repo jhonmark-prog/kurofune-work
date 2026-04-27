@@ -16,8 +16,8 @@ function formatDateRange(start: string, end: string | null, isCurrent: boolean):
 }
 
 function calcDuration(start: string, end: string | null, isCurrent: boolean): string {
-  // Simple label extraction from existing strings like "Dec 2019 - Nov 2024 (5 years)"
-  // In real app, calculate from actual dates
+
+
   return '';
 }
 

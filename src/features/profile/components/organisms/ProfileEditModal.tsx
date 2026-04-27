@@ -53,10 +53,8 @@ export function ProfileEditModal({
          >
            <View style={styles.sheetInner}>
              <View style={styles.sheet}>
-               <View style={styles.sheetHandle} />
-
-               {/* Header */}
-               <View style={styles.sheetHeader}>
+                <View style={styles.sheetHandle} />
+                <View style={styles.sheetHeader}>
                  <Typography style={styles.sheetTitle}>Profile Details</Typography>
                  <TouchableOpacity
                    style={styles.closeBtn}
@@ -65,10 +63,9 @@ export function ProfileEditModal({
                  >
                    <Ionicons name="close" size={16} color={Colors.textPrimary} />
                  </TouchableOpacity>
-               </View>
+                </View>
 
-               {/* Tab bar */}
-               <View style={styles.tabRow}>
+                <View style={styles.tabRow}>
                  {EDIT_TABS.map((tab) => {
                    const active = tab === activeTab;
                    return (
@@ -87,10 +84,8 @@ export function ProfileEditModal({
                      </TouchableOpacity>
                    );
                  })}
-               </View>
-
-               {/* Tab content */}
-               {activeTab === 'Personal' && (
+                </View>
+                {activeTab === 'Personal' && (
                  <PersonalTab profile={profile} onSave={onSavePersonal} />
                )}
                {activeTab === 'Experience' && (

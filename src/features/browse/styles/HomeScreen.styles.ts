@@ -43,6 +43,15 @@ export const homeStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  
+  headerActionBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 18,
+    backgroundColor: Colors.backgroundPrimary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   completionBanner: {
     backgroundColor: Colors.bannerBg,
     marginHorizontal: 16,
