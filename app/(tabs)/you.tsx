@@ -21,17 +21,17 @@ export default function YouScreen() {
     removeEducation,
   } = useProfile();
 
-  // Save experiences: diff the incoming list against current state
+
   const handleSaveExperiences = (updated: Experience[]) => {
     const currentIds = experiences.map((e) => e.id);
     const updatedIds = updated.map((e) => e.id);
 
-    // Remove deleted
+
     currentIds.forEach((id) => {
       if (!updatedIds.includes(id)) removeExperience(id);
     });
 
-    // Add new or update existing
+
     updated.forEach((exp) => {
       if (currentIds.includes(exp.id)) {
         updateExperience(exp.id, exp);

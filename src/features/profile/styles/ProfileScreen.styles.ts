@@ -22,7 +22,7 @@ export const profileScreenStyles = StyleSheet.create({
     paddingBottom: 40,
   },
 
-  // Header actions (bell + settings)
+
   headerActions: {
     flexDirection: 'row',
     gap: 12,
@@ -36,7 +36,7 @@ export const profileScreenStyles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // Completion banner
+
   completionBanner: {
     backgroundColor: Colors.bannerBg,
     marginHorizontal: 16,
@@ -73,7 +73,7 @@ export const profileScreenStyles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // Profile Info Card (combined)
+
   profileInfoHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -84,8 +84,8 @@ export const profileScreenStyles = StyleSheet.create({
     flex: 1,
   },
   contactGrid: {
-    // flexDirection: 'row',
-    // flexWrap: 'wrap',
+
+
     gap: 12,
     paddingVertical: 15,
   },
@@ -96,7 +96,7 @@ export const profileScreenStyles = StyleSheet.create({
     width: '45%',
   },
 
-  // Identity card
+
   identityCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -149,7 +149,7 @@ export const profileScreenStyles = StyleSheet.create({
     padding: 4,
   },
 
-  // Section card
+
   sectionCard: {
     marginHorizontal: 16,
     backgroundColor: '#ffffff',
@@ -182,7 +182,7 @@ export const profileScreenStyles = StyleSheet.create({
     marginBottom: 12,
   },
 
-  // Contact info rows
+
   contactRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -201,7 +201,7 @@ export const profileScreenStyles = StyleSheet.create({
     fontStyle: 'italic',
   },
 
-  // About me
+
   aboutText: {
     fontSize: 14,
     color: Colors.textPrimary,
@@ -217,7 +217,7 @@ export const profileScreenStyles = StyleSheet.create({
     paddingVertical: 8,
   },
 
-  // Experience / Education items
+
   expItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -259,7 +259,7 @@ export const profileScreenStyles = StyleSheet.create({
     marginBottom: 14,
   },
 
-  // CV row
+
   cvRow: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -9,6 +9,8 @@ import { ActiveFilterChips } from '@/features/browse/components';
 import { PROFILE_COMPLETION_PCT } from '@/features/browse/constants/browseData';
 import { HeaderBanner, Typography } from '@/components';
 import { useBrowse } from '@/features/browse/hooks/useBrowse';
+import { NotificationBell } from '@/components/atoms/NotificationBell';
+import { SettingsGear } from '@/features/settings/components/atoms/SettingsGear';
 
 export default function HomeScreen() {
   const { 
@@ -27,12 +29,8 @@ export default function HomeScreen() {
         title="Let's find you a job!"
         rightContent={
           <View style={styles.headerIcons}>
-            <TouchableOpacity style={styles.headerIconBtn}>
-              <Ionicons name="notifications-outline" size={17} color={Colors.buttonStrokePrimary} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.headerIconBtn}>
-              <Ionicons name="settings-outline" size={17} color={Colors.buttonStrokePrimary} />
-            </TouchableOpacity>
+            <NotificationBell />
+            <SettingsGear wrapperStyle={styles.headerActionBtn} />
           </View>
         }
       />

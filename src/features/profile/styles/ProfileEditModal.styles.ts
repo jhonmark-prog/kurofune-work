@@ -57,7 +57,7 @@ export const editModalStyles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // Tabs
+
   tabRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
@@ -89,7 +89,7 @@ export const editModalStyles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
 
-  // Form body
+
   formScroll: {
     flex: 1,
   },
@@ -99,7 +99,7 @@ export const editModalStyles = StyleSheet.create({
     paddingBottom: 16,
   },
 
-  // Field
+
   fieldLabel: {
     fontSize: 13,
     fontFamily: 'NunitoSans-Bold',
@@ -142,7 +142,7 @@ export const editModalStyles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
   },
 
-  // Experience / Education section within form
+
   entryCard: {
     borderWidth: 1,
     borderColor: Colors.divider,
@@ -201,7 +201,7 @@ export const editModalStyles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
   },
 
-  // New entry form block
+
   newEntryBlock: {
     marginBottom: 16,
   },
@@ -227,7 +227,7 @@ export const editModalStyles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
   },
 
-  // Checkbox
+
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -253,7 +253,7 @@ export const editModalStyles = StyleSheet.create({
     color: Colors.textPrimary,
   },
 
-  // Add another button
+
   addAnotherBtn: {
     borderWidth: 1.5,
     borderColor: Colors.primary,
@@ -268,7 +268,7 @@ export const editModalStyles = StyleSheet.create({
     fontFamily: 'NunitoSans-Medium',
   },
 
-  // Save button
+
   saveBtn: {
     backgroundColor: Colors.primary,
     borderRadius: 10,

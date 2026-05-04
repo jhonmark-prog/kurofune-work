@@ -1,30 +1,30 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeaderBanner } from '@/components/atoms/HeaderBanner';
+import { useActivity } from "@/features/activity/hooks/useActivity";
+import { ActivityView } from '@/features/activity/components/ActivityView';
 
-export default function ServiceScreen() {
+export default function ActivityScreen() {
+  const {
+    applications,
+    savedJobs,
+    activeTab,
+    removeSavedConfirmJobId,
+    switchTab,
+    handleBookmarkPress,
+    handleCancelRemove,
+    handleConfirmRemove,
+    handleJobPress,
+  } = useActivity();
+
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
-      <HeaderBanner title="Activity" />
-      <View style={styles.content}>
-        <Text style={styles.placeholder}>（コンテンツ placeholder）</Text>
-      </View>
-    </SafeAreaView>
+    <ActivityView
+      applications={applications}
+      savedJobs={savedJobs}
+      activeTab={activeTab}
+      removeSavedConfirmJobId={removeSavedConfirmJobId}
+      onTabChange={switchTab}
+      onJobPress={handleJobPress}
+      onBookmarkPress={handleBookmarkPress}
+      onCancelRemove={handleCancelRemove}
+      onConfirmRemove={handleConfirmRemove}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  placeholder: {
-    fontSize: 14,
-    color: '#666666',
-  },
-});

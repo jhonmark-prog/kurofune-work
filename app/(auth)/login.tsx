@@ -20,7 +20,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [inputErr, setInputErr] = useState<string>();
   const [hidePassword, setHidePassword] = useState(true);
-  
+
   const onSignupPress = () => {
     router.dismissAll(); 
     router.replace('/');

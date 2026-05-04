@@ -90,14 +90,14 @@ export function HeaderBanner({
     >
       <View
         style={[
-          StyleSheet.absoluteFillObject,
+          StyleSheet.absoluteFill,
           { backgroundColor: `rgba(0,0,0,${overlayOpacity})` },
         ]}
       />
     </ImageBackground>
   ) : (
     <View style={styles.gradient}>
-      <Svg style={StyleSheet.absoluteFillObject} width="100%" height="100%">
+      <Svg style={StyleSheet.absoluteFill} width="100%" height="100%">
         <Defs>
           <SvgLinearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             {getGradientStops(resolvedGradient.colors).map((stop) => (
@@ -172,10 +172,10 @@ const styles = StyleSheet.create({
     maxHeight: 145,
   },
   gradient: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   imageBackground: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     width: '100%',
     height: '100%',
   },
