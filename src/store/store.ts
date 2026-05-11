@@ -8,6 +8,7 @@ import profileReducer from '../store/profileSlice';
 import activityReducer from '../store/activitySlice';
 import notificationsReducer from '../store/notificationsSlice';
 import settingsReducer from '../store/settingsSlice';
+import applicationsReducer from '../store/applicationsSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -17,13 +18,14 @@ const rootReducer = combineReducers({
   activity: activityReducer,
   notifications: notificationsReducer,
   settings: settingsReducer,
+  applications: applicationsReducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage: AsyncStorage,
-  whitelist: ['user', 'browse', 'jobDetail', 'profile',  'activity', 'notifications', 'settings', ''],
+  whitelist: ['user', 'browse', 'jobDetail', 'profile', 'activity', 'notifications', 'settings', 'applications'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,5 +39,8 @@ export const store = configureStore({
       },
     }),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const persistor = persistStore(store);

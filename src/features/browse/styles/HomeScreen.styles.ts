@@ -186,4 +186,39 @@ export const homeStyles = StyleSheet.create({
     marginTop: 12,
     fontFamily: 'NunitoSans-Regular',
   },
+  loadingState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 60,
+  },
+  loadingText: {
+    fontSize: 15,
+    color: Colors.textSecondary,
+    marginTop: 12,
+    fontFamily: 'NunitoSans-Regular',
+  },
+  errorState: {
+    alignItems: 'center',
+    paddingTop: 60,
+    paddingHorizontal: 32,
+  },
+  errorText: {
+    fontSize: 15,
+    color: '#ef4444',
+    textAlign: 'center',
+    fontFamily: 'NunitoSans-Regular',
+  },
+  retryBtn: {
+    marginTop: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    backgroundColor: Colors.primary,
+    borderRadius: 8,
+  },
+  retryText: {
+    fontSize: 14,
+    color: Colors.textInverse,
+    fontFamily: 'NunitoSans-Medium',
+  },
 });

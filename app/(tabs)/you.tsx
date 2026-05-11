@@ -1,5 +1,7 @@
 import { useProfile } from '@/features/profile/hooks/useProfile';
 import { ProfileView } from '@/features/profile/components/ProfileView';
+import { useSelector } from 'react-redux';
+import { selectUserData } from '@/store/userSlice';
 import type { Profile, Experience, Education } from '@/features/profile/types/profile.types';
 
 export default function YouScreen() {
@@ -21,6 +23,17 @@ export default function YouScreen() {
     removeEducation,
   } = useProfile();
 
+  const user = useSelector(selectUserData);
+
+  // Merge user details into profile for display
+  const mergedProfile: Profile = {
+    ...profile,
+    full_name: user.fullName ?? profile.full_name,
+    email: user.email ?? profile.email,
+    gender: user.gender ? user.gender.toLowerCase() : (profile.gender || ''),
+    nationality: user.nationality ?? profile.nationality,
+    avatar_url: user.photo ?? profile.avatar_url ?? null,
+  };
 
   const handleSaveExperiences = (updated: Experience[]) => {
     const currentIds = experiences.map((e) => e.id);
@@ -64,7 +77,7 @@ export default function YouScreen() {
 
   return (
     <ProfileView
-      profile={profile}
+      profile={mergedProfile}
       experiences={experiences}
       educations={educations}
       editModalVisible={editModalVisible}
