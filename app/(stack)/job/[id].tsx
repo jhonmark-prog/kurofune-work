@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -21,6 +21,8 @@ export default function JobDetailScreen() {
     isSaved,
     toggleSaved,
     applyForJob,
+    applyLoading,
+    applyError,
   } = useJobDetail(id ?? '');
 
   const currentJob = job ?? DUMMY_JOB_DETAIL;
@@ -63,18 +65,26 @@ export default function JobDetailScreen() {
 
       <JobDetailContent job={currentJob} activeTab={activeTab} />
 
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={[styles.applyBtn, hasApplied && styles.applyBtnDisabled]}
-          onPress={applyForJob}
-          disabled={hasApplied}
-          activeOpacity={0.85}
-        >
-          <Text style={styles.applyBtnText}>
-            {hasApplied ? 'Applied' : 'Apply'}
-          </Text>
-        </TouchableOpacity>
-      </View>
+       <View style={styles.footer}>
+         <TouchableOpacity
+           style={[styles.applyBtn, hasApplied && styles.applyBtnDisabled, applyLoading && styles.applyBtnLoading]}
+           onPress={applyForJob}
+           disabled={hasApplied || applyLoading}
+           activeOpacity={0.85}
+         >
+           {hasApplied ? (
+             <Text style={styles.applyBtnText}>Applied</Text>
+           ) : applyLoading ? (
+             <ActivityIndicator size="small" color="#FFFFFF" />
+           ) : (
+             <Text style={styles.applyBtnText}>Apply</Text>
+           )}
+         </TouchableOpacity>
+         
+         {applyError && (
+           <Text style={styles.applyErrorText}>{applyError}</Text>
+         )}
+       </View>
     </SafeAreaView>
   );
 }

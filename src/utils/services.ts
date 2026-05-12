@@ -5,7 +5,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 
-const BASE_URL = 'ab8c-139-135-77-110.ngrok-free.app';
+export const BASE_URL = 'ab8c-139-135-77-110.ngrok-free.app';
 
 interface UserRegistrationData {
     error: string | null,
@@ -110,6 +110,7 @@ export const loginUser = async (userInfo: UserLoginProps): Promise<UserLoginData
         }
 
         const result = await response.json();
+        console.log('Login response:', result);
 
         returnData.user = formatReturnedUserData(result.data);
     } catch (error: unknown) {
@@ -125,3 +126,7 @@ export const loginUser = async (userInfo: UserLoginProps): Promise<UserLoginData
 
     return returnData;
 }
+
+
+
+

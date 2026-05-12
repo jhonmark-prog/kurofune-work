@@ -5,18 +5,22 @@ import {
   selectJobs,
   selectAppliedFilters,
   selectSavedJobIds,
+  selectLoading,
+  selectError,
   setAppliedFilters,
   updateFilter,
   clearFilter,
   clearAllFilters,
   toggleSavedJob,
+  loadJobsAsync,
 } from '../../../store/browseSlice';
 import type { RootState } from '../../../store/types';
+import type { AppDispatch } from '../../../store/store';
 import type { JobFilters } from '../types/browse.types';
 
 export const useBrowse = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   
   const params = useLocalSearchParams<{
     location?: string;
@@ -27,6 +31,8 @@ export const useBrowse = () => {
   const jobs = useSelector((state: RootState) => selectJobs(state));
   const appliedFilters = useSelector((state: RootState) => selectAppliedFilters(state));
   const savedJobIds = useSelector((state: RootState) => selectSavedJobIds(state));
+  const loading = useSelector((state: RootState) => selectLoading(state));
+  const error = useSelector((state: RootState) => selectError(state));
 
   const hasActiveFilters =
     appliedFilters.location !== '' ||
@@ -48,6 +54,12 @@ export const useBrowse = () => {
     });
   };
 
+  // Load jobs on mount
+  useEffect(() => {
+    dispatch(loadJobsAsync());
+  }, [dispatch]);
+
+  // Apply URL params filters
   useEffect(() => {
     if (params.location !== undefined || params.industry !== undefined || params.visaType !== undefined) {
       dispatch(updateFilter({ key: 'location', value: params.location ?? '' }));
@@ -76,6 +88,10 @@ export const useBrowse = () => {
     dispatch(toggleSavedJob({ jobId }));
   };
 
+  const refreshJobs = () => {
+    dispatch(loadJobsAsync());
+  };
+
   const handleFilterPress = () => {
     router.push({
       pathname: '/browse/filter',
@@ -92,6 +108,8 @@ export const useBrowse = () => {
     jobs,
     appliedFilters,
     savedJobIds,
+    loading,
+    error,
     hasActiveFilters,
     getFilteredJobs,
     setFilters,
@@ -99,6 +117,7 @@ export const useBrowse = () => {
     clearFilter: handleClearFilter,
     clearAllFilters: handleClearAllFilters,
     toggleSaved,
+    refreshJobs,
     handleFilterPress,
   };
 };
