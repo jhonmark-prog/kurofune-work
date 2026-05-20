@@ -17,6 +17,9 @@ export const screenStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  applyBtnLoading: {
+    backgroundColor: Colors.primary,
+  },
   applyBtnDisabled: {
     backgroundColor: Colors.textTertiary,
   },
@@ -25,5 +28,11 @@ export const screenStyles = StyleSheet.create({
     fontWeight: '700',
     color: '#FFFFFF',
     fontFamily: 'NunitoSans-Bold',
+  },
+  applyErrorText: {
+    color: Colors.error,
+    fontSize: 12,
+    marginTop: 8,
+    textAlign: 'center',
   },
 });

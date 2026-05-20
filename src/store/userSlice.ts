@@ -1,14 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export enum GENDER { 
+  FEMALE = 'Female', 
+  MALE = 'Male'
+}
+
 export interface User {
-  id?: string;
-  name?: string;
+  id?: number;
+  fullName?: string;
   email?: string;
   password?: string;
-  gender?: string;
+  gender?: GENDER;
   birthday?: string;
   nationality?: string;
   photo?: string;
+  accessToken?: string;
+  active?: boolean;
+  emailVerified?: boolean;
+}
+
+export interface TempUser extends User {
+    confirmPassword?: string;
 }
 
 const initialUser: User = {};

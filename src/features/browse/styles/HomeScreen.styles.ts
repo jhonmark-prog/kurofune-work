@@ -43,6 +43,15 @@ export const homeStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  
+  headerActionBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 18,
+    backgroundColor: Colors.backgroundPrimary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   completionBanner: {
     backgroundColor: Colors.bannerBg,
     marginHorizontal: 16,
@@ -176,5 +185,40 @@ export const homeStyles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 12,
     fontFamily: 'NunitoSans-Regular',
+  },
+  loadingState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 60,
+  },
+  loadingText: {
+    fontSize: 15,
+    color: Colors.textSecondary,
+    marginTop: 12,
+    fontFamily: 'NunitoSans-Regular',
+  },
+  errorState: {
+    alignItems: 'center',
+    paddingTop: 60,
+    paddingHorizontal: 32,
+  },
+  errorText: {
+    fontSize: 15,
+    color: '#ef4444',
+    textAlign: 'center',
+    fontFamily: 'NunitoSans-Regular',
+  },
+  retryBtn: {
+    marginTop: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    backgroundColor: Colors.primary,
+    borderRadius: 8,
+  },
+  retryText: {
+    fontSize: 14,
+    color: Colors.textInverse,
+    fontFamily: 'NunitoSans-Medium',
   },
 });

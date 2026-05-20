@@ -85,7 +85,7 @@ export const VISA_TYPE_OPTIONS = [
   'Others',
 ] as const;
 
-export const PROFILE_COMPLETION_PCT = 0;
+export const PROFILE_COMPLETION_PCT = 100;
 
 export const DEFAULT_FILTERS: JobFilters = {
   location: '',
