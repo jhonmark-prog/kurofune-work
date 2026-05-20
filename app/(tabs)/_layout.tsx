@@ -4,7 +4,7 @@ import { Colors } from '@/constants/colors';
 
 function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   const icons: Record<string, keyof typeof Ionicons.glyphMap> = {
-    browse: 'search',
+    browse: 'business-outline',
     activity: 'flash',
     chats: 'chatbubbles',
     you: 'person',

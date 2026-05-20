@@ -5,6 +5,7 @@ import { Colors } from '@/constants/colors';
 import type { Job } from '../../types/browse.types';
 import { ImagePlaceholder } from '@/assets/svg/ImagePlaceholder';
 import { jobCardStyles as styles } from '../../styles/JobCard.styles';
+import { formatPostedDate } from '@/utils/formatPostedDate';
 
 interface JobCardProps {
   job: Job;
@@ -19,7 +20,7 @@ export function JobCard({ job, onPress, onBookmark }: JobCardProps) {
         <Typography
           variant="heading3"
           style={styles.title}
-          numberOfLines={2}
+          numberOfLines={1}
         >
           {job.title}
         </Typography>
@@ -36,9 +37,9 @@ export function JobCard({ job, onPress, onBookmark }: JobCardProps) {
         </TouchableOpacity>
       </View>
 
-      <Typography style={styles.postedDate}>
-        Posted {job.posted_at}
-      </Typography>
+       <Typography style={styles.postedDate}>
+         {formatPostedDate(job.posted_at)}
+       </Typography>
 
       <View style={styles.bottomRow}>
         <View style={styles.metaBlock}>

@@ -7,6 +7,7 @@ import { JobInfoBlock, JobDetailTabs, JobDetailContent } from '@/features/job-de
 import { useJobDetail } from '@/features/job-detail/hooks/useJobDetail';
 import { screenStyles as styles } from '@/features/job-detail/styles/JobDetailScreen.styles';
 import { DUMMY_JOB_DETAIL } from '@/features/job-detail/constants/jobDetailData';
+import { Colors } from '@/constants/colors';
 
 export default function JobDetailScreen() {
   const router = useRouter();
@@ -23,6 +24,8 @@ export default function JobDetailScreen() {
     applyForJob,
     applyLoading,
     applyError,
+    fetchLoading,
+    fetchError,
   } = useJobDetail(id ?? '');
 
   const currentJob = job ?? DUMMY_JOB_DETAIL;
@@ -55,36 +58,54 @@ export default function JobDetailScreen() {
         }
       />
 
-      <JobInfoBlock job={currentJob} />
+      {fetchLoading && (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+      )}
 
-      <JobDetailTabs
-        tabs={tabs}
-        activeTab={activeTab}
-        onTabPress={setActiveTab}
-      />
+      {fetchError && !fetchLoading && (
+        <View style={{ padding: 20 }}>
+          <Text style={{ color: Colors.danger, textAlign: 'center' }}>
+            {fetchError}
+          </Text>
+        </View>
+      )}
 
-      <JobDetailContent job={currentJob} activeTab={activeTab} />
+      {!fetchLoading && !fetchError && (
+        <>
+          <JobInfoBlock job={currentJob} />
 
-       <View style={styles.footer}>
-         <TouchableOpacity
-           style={[styles.applyBtn, hasApplied && styles.applyBtnDisabled, applyLoading && styles.applyBtnLoading]}
-           onPress={applyForJob}
-           disabled={hasApplied || applyLoading}
-           activeOpacity={0.85}
-         >
-           {hasApplied ? (
-             <Text style={styles.applyBtnText}>Applied</Text>
-           ) : applyLoading ? (
-             <ActivityIndicator size="small" color="#FFFFFF" />
-           ) : (
-             <Text style={styles.applyBtnText}>Apply</Text>
-           )}
-         </TouchableOpacity>
-         
-         {applyError && (
-           <Text style={styles.applyErrorText}>{applyError}</Text>
-         )}
-       </View>
+          <JobDetailTabs
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabPress={setActiveTab}
+          />
+
+          <JobDetailContent job={currentJob} activeTab={activeTab} />
+
+          <View style={styles.footer}>
+            <TouchableOpacity
+              style={[styles.applyBtn, hasApplied && styles.applyBtnDisabled, applyLoading && styles.applyBtnLoading]}
+              onPress={applyForJob}
+              disabled={hasApplied || applyLoading}
+              activeOpacity={0.85}
+            >
+              {hasApplied ? (
+                <Text style={styles.applyBtnText}>Applied</Text>
+              ) : applyLoading ? (
+                <ActivityIndicator size="small" color="#FFFFFF" />
+              ) : (
+                <Text style={styles.applyBtnText}>Apply</Text>
+              )}
+            </TouchableOpacity>
+            
+            {applyError && (
+              <Text style={styles.applyErrorText}>{applyError}</Text>
+            )}
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 }

@@ -13,6 +13,7 @@ import { NotificationBell } from '@/components/atoms/NotificationBell';
 import { SettingsGear } from '@/features/settings/components/atoms/SettingsGear';
 import { useDispatch } from 'react-redux';
 import { setJob } from '@/store/jobDetailSlice';
+import { fetchJobDetailById } from '@/store/jobDetailSlice';
 import type { Job } from '@/features/browse/types/browse.types';
 import type { JobDetail } from '@/features/job-detail/types/job-detail.types';
 
@@ -94,37 +95,21 @@ export default function HomeScreen() {
                keyExtractor={(item) => item?.id}
                contentContainerStyle={styles.listContent}
                renderItem={({ item }) => (
-                 <JobCard 
-                   job={item} 
-                   onPress={(job) => {
-                     // Convert browse Job to JobDetail and set in Redux store
-                     const jobDetail: JobDetail = {
-                       id: job.id,
-                       title: job.title,
-                       company_name: job.company_name,
-                       location: job.location,
-                       industry: job.industry,
-                       japanese_level: undefined,
-                       visa_type: job.visa_type,
-                       salary_min: job.salary_min,
-                       salary_max: undefined,
-                       posted_at: job.posted_at,
-                       closing_date: undefined,
-                       hero_image_url: undefined,
-                       is_saved: job.is_saved,
-                       overview: undefined,
-                       job_description: undefined,
-                       working_conditions: undefined,
-                       housing_support: undefined,
-                       application_conditions: undefined,
-                       selection_process: undefined,
-                       others: undefined,
-                     };
-                     dispatch(setJob({ jobId: job.id, job: jobDetail }));
-                     router.push(`/job/${job.id}`);
-                   }}
-                   onBookmark={toggleSaved}
-                 />
+                  <JobCard 
+                    job={item} 
+                    onPress={async (job) => {
+                      // Fetch job detail from API and set in Redux store
+                      try {
+                        await dispatch(fetchJobDetailById(job.id)).unwrap();
+                        router.push(`/job/${job.id}`);
+                      } catch (error) {
+                        console.error('Failed to fetch job detail:', error);
+                        // Still navigate even if fetch fails, as we might have cached data
+                        router.push(`/job/${job.id}`);
+                      }
+                    }}
+                    onBookmark={toggleSaved}
+                  />
                )}
                ListEmptyComponent={
                  <View style={styles.emptyState}>
