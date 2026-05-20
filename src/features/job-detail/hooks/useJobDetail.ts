@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect } from 'react';
 import { JOB_DETAIL_TABS } from '../constants/jobDetailData';
-import { selectJobDetail, selectActiveTab, selectHasApplied, selectIsSaved, setJob, setActiveTab, toggleSaved as toggleSavedAction, applyForJob, applyForJobAsync, selectApplyLoading, selectApplyError } from '../../../store/jobDetailSlice';
+import { selectJobDetail, selectActiveTab, selectHasApplied, selectIsSaved, setJob, setActiveTab, toggleSaved as toggleSavedAction, applyForJob, applyForJobAsync, fetchJobDetailById, selectApplyLoading, selectApplyError, selectFetchLoading, selectFetchError } from '../../../store/jobDetailSlice';
 import type { RootState } from '../../../store/types';
 import type { JobDetailTab } from '../types/job-detail.types';
 import { useCallback } from 'react';
@@ -18,6 +19,15 @@ export function useJobDetail(jobId: string) {
   const isSaved = useSelector((state: RootState) => selectIsSaved(state, jobId));
   const applyLoading = useSelector((state: RootState) => selectApplyLoading(state, jobId));
   const applyError = useSelector((state: RootState) => selectApplyError(state, jobId));
+  const fetchLoading = useSelector((state: RootState) => selectFetchLoading(state, jobId));
+  const fetchError = useSelector((state: RootState) => selectFetchError(state, jobId));
+
+  // Fetch job detail when jobId changes
+  useEffect(() => {
+    if (jobId) {
+      dispatch(fetchJobDetailById(jobId));
+    }
+  }, [jobId, dispatch]);
 
   const setJobDetail = (jobData: typeof job) => {
     if (jobData) {
@@ -50,6 +60,8 @@ export function useJobDetail(jobId: string) {
     hasApplied,
     applyLoading,
     applyError,
+    fetchLoading,
+    fetchError,
     setActiveTab: setJobActiveTab,
     toggleSaved,
     applyForJob: handleApplyForJob,

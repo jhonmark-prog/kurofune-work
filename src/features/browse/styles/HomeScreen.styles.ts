@@ -110,6 +110,7 @@ export const homeStyles = StyleSheet.create({
   },
   listHeaderTitle: {
     color: Colors.textPrimary,
+    fontFamily: 'NunitoSans-Bold',
   },
   filterBtn: {
     flexDirection: 'row',

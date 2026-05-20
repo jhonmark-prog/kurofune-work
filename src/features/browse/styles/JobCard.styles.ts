@@ -13,6 +13,7 @@ export const jobCardStyles = StyleSheet.create({
   },
   titleRow: {
     flexDirection: 'row',
+    gap: 15,
   },
   title: {
     flex: 1,

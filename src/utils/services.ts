@@ -5,7 +5,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 
-export const BASE_URL = 'ab8c-139-135-77-110.ngrok-free.app';
+export const BASE_URL = 'barrier-erasable-uncivil.ngrok-free.dev';
 
 interface UserRegistrationData {
     error: string | null,
