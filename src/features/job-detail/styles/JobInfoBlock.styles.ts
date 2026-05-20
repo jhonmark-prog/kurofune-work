@@ -4,18 +4,19 @@ import { Colors } from '@/constants/colors';
 export const infoBlockStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingBottom: 20,
+    paddingBottom: 0,
     paddingTop: 8,
     marginTop: -40,
   },
   infoContents: {
     backgroundColor: '#ffffff',
     borderRadius: 12,
-    padding: 14,
-    textAlign: 'center',
-    shadowColor: '#b6aeae',
-    shadowOpacity: 0.03,
-    elevation: 5,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 4,
   },
   title: {
     fontSize: 15,
@@ -29,7 +30,7 @@ export const infoBlockStyles = StyleSheet.create({
   companyName: {
     fontSize: 12,
     color: Colors.textSecondary,
-    marginBottom: 6,
+    marginBottom: 8,
     fontFamily: 'NunitoSans-Medium',
     textAlign: 'center',
   },
@@ -41,10 +42,9 @@ export const infoBlockStyles = StyleSheet.create({
     marginBottom: 14,
   },
   locationText: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#000000',
     fontFamily: 'NunitoSans-Regular',
-    textAlign: 'center',
   },
   pillsRow: {
     flexDirection: 'row',
@@ -65,15 +65,15 @@ export const infoBlockStyles = StyleSheet.create({
     marginTop: 2,
   },
   pillLabel: {
-    fontSize: 12,
+    fontSize: 11,
     color: Colors.textSecondary,
     fontFamily: 'NunitoSans-Bold',
     marginBottom: 2,
   },
   pillValue: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
     color: '#000000',
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: 'NunitoSans-SemiBold',
   },
 });

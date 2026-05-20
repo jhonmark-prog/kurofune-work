@@ -14,6 +14,12 @@ export interface JobDetail {
   hero_image_url?: string;
   is_saved: boolean;
 
+  // Direct fields mapped from API (used by JobInfoBlock pills)
+  working_hours?: string;
+  holiday?: string;
+  overtime?: string;
+  remarks?: string;
+
   overview?: JobOverview;
   job_description?: string;
   working_conditions?: JobWorkingConditions;
